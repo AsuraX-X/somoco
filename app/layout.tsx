@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/General/Header";
 import Footer from "@/components/General/Footer";
+import StudioGuard from "@/components/General/StudioGuard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} mt-14 ${geistMono.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <StudioGuard header={<Header />} footer={<Footer />}>
+          {children}
+        </StudioGuard>
       </body>
     </html>
   );

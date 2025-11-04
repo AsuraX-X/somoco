@@ -1,62 +1,62 @@
 "use client";
-import Image from "next/image";
-
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemHeader,
-  ItemTitle,
-} from "@/components/ui/item";
-import { Button } from "../ui/button";
+import { useEffect, useRef, useState } from "react";
 import {
   Carousel,
   CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
-import { useEffect, useRef, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
+import VehicleCard from "@/components/Home/VehicleCard";
 
-const models = [
-  {
-    name: "Bajaj Qute",
-    model: "Qute",
-    image: "/Bajaj-Qute.png",
-    engine: "217 cc",
-  },
-  {
-    name: "Bajaj Qute",
-    model: "Qute",
-    image: "/Bajaj-Qute.png",
-    engine: "217 cc",
-  },
-  {
-    name: "Bajaj Qute",
-    model: "Qute",
-    image: "/Bajaj-Qute.png",
-    engine: "217 cc",
-  },
-  {
-    name: "Bajaj Qute",
-    model: "Qute",
-    image: "/Bajaj-Qute.png",
-    engine: "217 cc",
-  },
-  {
-    name: "Bajaj Qute",
-    model: "Qute",
-    image: "/Bajaj-Qute.png",
-    engine: "217 cc",
-  },
-];
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import { VEHICLES_FOR_CAROUSEL } from "@/sanity/lib/queries";
+import type { Vehicle } from "@/sanity.types";
 
 const VehicleCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();
+  const [models, setModels] = useState<
+    Array<{
+      name?: string;
+      image?: string;
+      engine?: string;
+      horsepower?: string;
+    }>
+  >([]);
   // selected is a 0-based index of the currently visible slide
   const [selected, setSelected] = useState(0);
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch vehicles from Sanity
+    client
+      .fetch(VEHICLES_FOR_CAROUSEL)
+      .then(
+        (
+          res: Array<{
+            name?: Vehicle["name"];
+            image?: Vehicle["images"] extends Array<infer U> ? U : unknown;
+            engine?: Vehicle["engine"];
+            horsepower?: Vehicle["horsepower"];
+          }>
+        ) => {
+          const mapped = res.map((v) => ({
+            name: v.name,
+            image: v.image
+              ? urlFor(v.image).width(800).height(600).url()
+              : undefined,
+            engine: v.engine,
+            horsepower: v.horsepower,
+          }));
+          setModels(mapped);
+        }
+      )
+      .catch((err) => {
+        // keep silent; could add logger
+        console.error("Failed to fetch vehicles", err);
+      });
+  }, []);
 
   useEffect(() => {
     if (!api) {
@@ -102,35 +102,12 @@ const VehicleCarousel = () => {
           <CarouselContent>
             {models.map((model, i) => (
               <CarouselItem className="md:basis-1/2 lg:basis-1/3" key={i}>
-                {" "}
-                <Item key={i} variant={"outline"}>
-                  <ItemHeader className="relative">
-                    <Image
-                      src={"/inner-bg.png"}
-                      alt={"background"}
-                      width={128}
-                      height={128}
-                      unoptimized
-                      className="aspect-square absolute w-full rounded-sm object-cover"
-                    />
-                    <Image
-                      src={model.image}
-                      alt={model.name}
-                      width={128}
-                      height={128}
-                      unoptimized
-                      className="aspect-square z-10 w-full rounded-sm object-cover"
-                    />
-                  </ItemHeader>
-                  <ItemContent>
-                    <ItemTitle>{model.name}</ItemTitle>
-                    <ItemDescription>{model.model}</ItemDescription>
-                    <ItemDescription>{model.engine}</ItemDescription>
-                  </ItemContent>
-                  <ItemActions>
-                    <Button>Request Quote</Button>
-                  </ItemActions>
-                </Item>
+                <VehicleCard
+                  name={model.name}
+                  image={model.image}
+                  engine={model.engine}
+                  horsepower={model.horsepower}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>

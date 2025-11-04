@@ -1,71 +1,60 @@
-import React from "react";
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemGroup,
-  ItemHeader,
-  ItemTitle,
-} from "../ui/item";
-import Image from "next/image";
-import { Button } from "../ui/button";
+"use client";
+import React, { useEffect, useState } from "react";
+import { ItemGroup } from "../ui/item";
+import VehicleCard from "@/components/Home/VehicleCard";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import { LATEST_3_VEHICLES } from "@/sanity/lib/queries";
+import type { Vehicle } from "@/sanity.types";
 
 const FeaturedProducts = () => {
-  const models = [
-    {
-      name: "Bajaj Qute",
-      model: "Qute",
-      image: "/Bajaj-Qute.png",
-      engine: "217 cc",
-    },
-    {
-      name: "Bajaj Qute",
-      model: "Qute",
-      image: "/Bajaj-Qute.png",
-      engine: "217 cc",
-    },
-    {
-      name: "Bajaj Qute",
-      model: "Qute",
-      image: "/Bajaj-Qute.png",
-      engine: "217 cc",
-    },
-  ];
+  const [models, setModels] = useState<
+    Array<{
+      name?: string;
+      image?: string;
+      engine?: string;
+      horsepower?: string;
+    }>
+  >([]);
+
+  useEffect(() => {
+    client
+      .fetch(LATEST_3_VEHICLES)
+      .then(
+        (
+          res: Array<{
+            name?: Vehicle["name"];
+            image?: Vehicle["images"] extends Array<infer U> ? U : unknown;
+            engine?: Vehicle["engine"];
+            horsepower?: Vehicle["horsepower"];
+          }>
+        ) => {
+          const mapped = res.map((v) => ({
+            name: v.name,
+            image: v.image
+              ? urlFor(v.image).width(800).height(600).url()
+              : undefined,
+            engine: v.engine,
+            horsepower: v.horsepower,
+          }));
+          setModels(mapped);
+        }
+      )
+      .catch((err) => console.error("Failed to fetch featured vehicles", err));
+  }, []);
 
   return (
     <div className="px-4 sm:px-8">
       <h1 className="text-2xl text-center font-bold">Featured Products</h1>
       <ItemGroup className="grid md:grid-cols-2 py-8 lg:grid-cols-3 gap-4">
         {models.map((model, i) => (
-          <Item key={i} variant={"outline"}>
-            <ItemHeader className="relative">
-              <Image
-                src={"/inner-bg.png"}
-                alt={"background"}
-                width={128}
-                height={128}
-                unoptimized
-                className="aspect-square absolute w-full rounded-sm object-cover"
-              />
-              <Image
-                src={model.image}
-                alt={model.name}
-                width={128}
-                height={128}
-                unoptimized
-                className="aspect-square z-10 w-full rounded-sm object-cover"
-              />
-            </ItemHeader>
-            <ItemContent>
-              <ItemTitle>{model.name}</ItemTitle>
-              <ItemDescription>{model.model}</ItemDescription>
-              <ItemDescription>{model.engine}</ItemDescription>
-            </ItemContent>
-            <ItemActions>
-              <Button>Request Quote</Button>
-            </ItemActions>
-          </Item>
+          <VehicleCard
+            key={i}
+            name={model.name}
+            image={model.image}
+            engine={model.engine}
+            horsepower={model.horsepower}
+          />
         ))}
       </ItemGroup>
     </div>
