@@ -40,7 +40,7 @@ const Looking = () => {
               We have the most efficient yet durable and low fuel consumption
               motorbikes- Boxer 100 and Boxer 125.
             </p>
-            <Button className="w-fit text-xl px-8 h-12 cursor-pointer">
+            <Button className="w-fit text-xl px-8 mb-4 h-12 cursor-pointer">
               Contact Us
             </Button>
           </div>
@@ -66,7 +66,7 @@ const Looking = () => {
               </div>
             </div>
             <div className="flex flex-col">
-              <h2 className="font-extrabold text-4xl">
+              <h2 className="font-extrabold text-3xl/6 mt-2">
                 LOOKING FOR GENUINE BIKE ACCESSORIES?
               </h2>
               <p>

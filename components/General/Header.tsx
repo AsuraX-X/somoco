@@ -3,7 +3,7 @@ import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
-import { DrawerDemo } from "./Menu";
+import { Menu } from "./Menu";
 
 const Header = () => {
   return (
@@ -19,7 +19,7 @@ const Header = () => {
           </Button>
         </div>
         <div className="pl-4">
-          <DrawerDemo />
+          <Menu />
         </div>
       </div>
     </div>

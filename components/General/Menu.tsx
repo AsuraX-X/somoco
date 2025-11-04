@@ -24,9 +24,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Input } from "../ui/input";
 
-export function DrawerDemo() {
-  // Drawer-only menu — no goal state needed here
-
+export function Menu() {
   return (
     <Drawer direction="top">
       <DrawerTrigger asChild>
@@ -72,8 +70,33 @@ export function DrawerDemo() {
                     <NavigationMenuTrigger className="bg-primary p-2">
                       Products
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent className="md:left-full! md:top-0! md:ml-2 p-0 min-w-40 border-0! md:-translate-y-2">
-                      <ul className="flex flex-col text-white gap-2">
+                    <NavigationMenuContent className="md:left-full! md:top-0! md:ml-2 p-0.5 min-w-60 border-0! md:-translate-y-2">
+                      <ul className="grid grid-cols-2 text-white gap-2">
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href="/products">All Products</Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href="/products/category-a">Category A</Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href="/products/category-b">Category B</Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href="/products">All Products</Link>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink asChild>
+                            <Link href="/products/category-b">Category B</Link>
+                          </NavigationMenuLink>
+                        </li>
                         <li>
                           <NavigationMenuLink asChild>
                             <Link href="/products">All Products</Link>
@@ -113,7 +136,7 @@ export function DrawerDemo() {
                 </NavigationMenuList>
               </NavigationMenu>
             </div>
-            <div className="sm:block hidden w-full">
+            <div className="sm:block order-3 hidden w-full">
               <Image
                 src={"/menupic.jpg"}
                 unoptimized

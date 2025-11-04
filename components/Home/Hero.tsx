@@ -12,7 +12,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 
 const Hero = () => {
-  const banners = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg", "/5.png"];
+  const banners = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg"];
 
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }));
 
