@@ -18,6 +18,7 @@ const VehicleCarousel = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [models, setModels] = useState<
     Array<{
+      id?: string;
       name?: string;
       image?: string;
       engine?: string;
@@ -35,6 +36,7 @@ const VehicleCarousel = () => {
       .then(
         (
           res: Array<{
+            _id?: string;
             name?: Vehicle["name"];
             image?: Vehicle["images"] extends Array<infer U> ? U : unknown;
             engine?: Vehicle["engine"];
@@ -42,6 +44,7 @@ const VehicleCarousel = () => {
           }>
         ) => {
           const mapped = res.map((v) => ({
+            id: v._id,
             name: v.name,
             image: v.image
               ? urlFor(v.image).width(800).height(600).url()
@@ -101,8 +104,12 @@ const VehicleCarousel = () => {
         >
           <CarouselContent>
             {models.map((model, i) => (
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3" key={i}>
+              <CarouselItem
+                className="md:basis-1/2 lg:basis-1/3"
+                key={model.id ?? i}
+              >
                 <VehicleCard
+                  id={model.id}
                   name={model.name}
                   image={model.image}
                   engine={model.engine}

@@ -53,6 +53,7 @@ export default function ProductGrid({ search, selectedType }: Props) {
       {mapped.map((v) => (
         <VehicleCard
           key={v._id}
+          id={v._id}
           name={v.name}
           image={v.image}
           engine={v.engine}

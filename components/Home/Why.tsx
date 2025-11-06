@@ -13,22 +13,22 @@ const Why = () => {
     {
       title: "Financing Made Easy",
       desc: "Get flexible financing tailored to your vehicle needs.",
-      icon: <Coins />,
+      icon: <Coins className="size-6" />,
     },
     {
       title: "Carefully Selected Range",
       desc: "Durable vehicles built for African roads.",
-      icon: <Gauge />,
+      icon: <Gauge className="size-6" />,
     },
     {
       title: "Trusted By Millions",
       desc: "Bajaj Auto, the world’s 3rd largest maker of 2 & 3 wheelers. Trusted globally.",
-      icon: <Handshake />,
+      icon: <Handshake className="size-6" />,
     },
     {
       title: "Vehicle Service Maintenance",
       desc: "Expert maintenance advice and support. Call 050 329 0556.",
-      icon: <Wrench />,
+      icon: <Wrench className="size-6" />,
     },
   ];
   return (

@@ -40,10 +40,10 @@ export const VEHICLE_BY_SLUG = `*[_type == "vehicle" && slug.current == $slug][0
 }`;
 
 // Lightweight list used for components like the homepage carousel (first image + basic fields)
-export const VEHICLES_FOR_CAROUSEL = `*[_type == "vehicle"]{ name, "image": images[0], engine, horsepower, type }`;
+export const VEHICLES_FOR_CAROUSEL = `*[_type == "vehicle"]{ _id, name, "image": images[0], engine, horsepower, type }`;
 
 // Latest 3 vehicles (fallback instead of sample()). Use when sample() is unsupported.
-export const LATEST_3_VEHICLES = `*[_type == "vehicle"] | order(_createdAt desc)[0...3]{ name, "image": images[0], engine, horsepower }`;
+export const LATEST_3_VEHICLES = `*[_type == "vehicle"] | order(_createdAt desc)[0...3]{ _id, name, "image": images[0], engine, horsepower }`;
 
 const queries = {
   ALL_VEHICLES,

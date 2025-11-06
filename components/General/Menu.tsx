@@ -23,13 +23,57 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Input } from "../ui/input";
+import { client } from "@/sanity/lib/client";
+
+type TypesListProps = { types: string[] };
+
+function TypesListComp({ types }: TypesListProps) {
+  return (
+    <ul className="grid grid-cols-2 text-white gap-2">
+      <li>
+        <NavigationMenuLink asChild>
+          <DrawerClose asChild>
+            <Link className="text-[16px]!" href="/products">
+              All Products
+            </Link>
+          </DrawerClose>
+        </NavigationMenuLink>
+      </li>
+      {types.map((t) => (
+        <li key={t}>
+          <NavigationMenuLink asChild>
+            <DrawerClose asChild>
+              <Link
+                className="text-[16px]!"
+                href={`/products?type=${encodeURIComponent(t)}`}
+              >
+                {t}
+              </Link>
+            </DrawerClose>
+          </NavigationMenuLink>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export function Menu() {
+  const [types, setTypes] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    // fetch type values from vehicle documents and dedupe
+    client
+      .fetch<string[]>(`*[_type == "vehicle"].type`)
+      .then((res) => {
+        const t = Array.from(new Set(res.filter(Boolean)));
+        setTypes(t as string[]);
+      })
+      .catch(() => setTypes([]));
+  }, []);
   return (
     <Drawer direction="top">
       <DrawerTrigger asChild>
         <Button>
-          Menu{" "}
           <Image src={"/menu.png"} alt="menu icon" width={30} height={30} />
         </Button>
       </DrawerTrigger>
@@ -56,81 +100,54 @@ export function Menu() {
                 <NavigationMenuList className="flex items-start flex-col gap-2">
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link href="/">Home</Link>
+                      <DrawerClose asChild>
+                        <Link className="text-[16px]!" href="/">
+                          Home
+                        </Link>
+                      </DrawerClose>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link href="/about">About Us</Link>
+                      <DrawerClose asChild>
+                        <Link className="text-[16px]!" href="/about">
+                          About Us
+                        </Link>
+                      </DrawerClose>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem className="relative">
-                    <NavigationMenuTrigger className="bg-primary p-2">
+                    <NavigationMenuTrigger className="bg-primary text-[16px] p-2">
                       Products
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="md:left-full! md:top-0! md:ml-2 p-0.5 min-w-60 border-0! md:-translate-y-2">
-                      <ul className="grid grid-cols-2 text-white gap-2">
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/products">All Products</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/products/category-a">Category A</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/products/category-b">Category B</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/products">All Products</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/products/category-b">Category B</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/products">All Products</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/products/category-a">Category A</Link>
-                          </NavigationMenuLink>
-                        </li>
-                        <li>
-                          <NavigationMenuLink asChild>
-                            <Link href="/products/category-b">Category B</Link>
-                          </NavigationMenuLink>
-                        </li>
-                      </ul>
+                      <TypesListComp types={types} />
                     </NavigationMenuContent>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link href="/services">Services</Link>
+                      <Link className="text-[16px]!" href="/services">
+                        Services
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link href="/blogs">Blogs</Link>
+                      <Link className="text-[16px]!" href="/blogs">
+                        Blogs
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link href="/contact">Contact Us</Link>
+                      <Link className="text-[16px]!" href="/contact">
+                        Contact Us
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 </NavigationMenuList>

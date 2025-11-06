@@ -10,6 +10,7 @@ import type { Vehicle } from "@/sanity.types";
 const FeaturedProducts = () => {
   const [models, setModels] = useState<
     Array<{
+      id?: string;
       name?: string;
       image?: string;
       engine?: string;
@@ -23,6 +24,7 @@ const FeaturedProducts = () => {
       .then(
         (
           res: Array<{
+            _id?: string;
             name?: Vehicle["name"];
             image?: Vehicle["images"] extends Array<infer U> ? U : unknown;
             engine?: Vehicle["engine"];
@@ -30,6 +32,7 @@ const FeaturedProducts = () => {
           }>
         ) => {
           const mapped = res.map((v) => ({
+            id: v._id,
             name: v.name,
             image: v.image
               ? urlFor(v.image).width(800).height(600).url()
@@ -45,11 +48,14 @@ const FeaturedProducts = () => {
 
   return (
     <div className="px-4 sm:px-8">
-      <h1 className="text-2xl text-center font-bold">Featured Products</h1>
+      <h1 className="font-bold uppercase text-center text-2xl sm:text-3xl">
+        Featured products{" "}
+      </h1>{" "}
       <ItemGroup className="grid md:grid-cols-2 py-8 lg:grid-cols-3 gap-4">
         {models.map((model, i) => (
           <VehicleCard
-            key={i}
+            key={model.id ?? i}
+            id={model.id}
             name={model.name}
             image={model.image}
             engine={model.engine}
