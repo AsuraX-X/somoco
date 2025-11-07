@@ -13,6 +13,31 @@
  */
 
 // Source: schema.json
+export type Blog = {
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  excerpt?: string;
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  body?: string;
+};
+
 export type Vehicle = {
   _id: string;
   _type: "vehicle";
@@ -44,6 +69,7 @@ export type Vehicle = {
     _type: "image";
   };
   name?: string;
+  type?: string;
   description?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -124,6 +150,8 @@ export type Vehicle = {
     _key: string;
   }>;
 };
+
+export type Markdown = string;
 
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
@@ -243,5 +271,5 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Vehicle | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Blog | Vehicle | Markdown | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;

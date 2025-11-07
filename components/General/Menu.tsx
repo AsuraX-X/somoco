@@ -129,9 +129,11 @@ export function Menu() {
 
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link className="text-[16px]!" href="/services">
-                        Services
-                      </Link>
+                      <DrawerClose asChild>
+                        <Link className="text-[16px]!" href="/services">
+                          Services
+                        </Link>
+                      </DrawerClose>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 

@@ -22,21 +22,21 @@ const Hero = () => {
         loop: true,
       }}
       plugins={[plugin.current]}
-      className="mx-auto h-48 sm:h-[90vh] car cursor-grab active:cursor-grabbing relative max-w-screen"
+      className="mx-auto car cursor-grab active:cursor-grabbing relative max-w-screen"
     >
       <CarouselContent>
         {banners.map((_, index) => (
           <CarouselItem key={index}>
             <div>
               <Card className="rounded-none p-0">
-                <CardContent className="flex h-48 sm:h-[90vh] items-center justify-center p-0">
+                <CardContent className="flex h-fit bg-amber-200 items-center justify-center p-0">
                   <Image
                     src={_}
                     width={0}
                     height={0}
                     unoptimized
                     alt={`banner image-${index + 1}`}
-                    className="w-full h-full"
+                    className="w-full h-full object cover"
                   />
                 </CardContent>
               </Card>

@@ -7,7 +7,7 @@ const Looking = () => {
     <section>
       <div className="md:flex hidden overflow-x-hidden h-screen w-full">
         <div className="flex gap-4 flex-col flex-1">
-          <div className="h-full w-full relative bg-sky-400">
+          <div className="h-full w-full relative ">
             <Image
               src="/eco-1.png"
               alt="motor rider"
@@ -16,7 +16,7 @@ const Looking = () => {
               className="object-cover"
             />
           </div>
-          <div className="bg-sky-400">
+          <div>
             <Image
               src="/eco-2.png"
               alt="motor rider"

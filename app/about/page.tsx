@@ -11,7 +11,7 @@ const AboutUs = () => {
 
   return (
     <div>
-      <div className="w-full max-h-[430px] relative h-full bg-amber-200">
+      <div className="w-full max-h-[430px] relative h-full">
         <Image
           src={"/about-banner.png"}
           alt="about us banner"
@@ -20,9 +20,9 @@ const AboutUs = () => {
           unoptimized
           className="h-full w-full"
         />
-        <p className="absolute bottom-2 sm:bottom-5 px-4 sm:px-20 text-white font-extrabold text-2xl sm:text-4xl shadow-2xl text-shadow-2xs text-shadow-accent-foreground/30">
+        <h1 className="absolute bottom-2 sm:bottom-5 px-4 sm:px-20 text-white font-extrabold text-2xl sm:text-4xl shadow-2xl uppercase text-shadow-2xs text-shadow-accent-foreground/30">
           About Us
-        </p>
+        </h1>
       </div>
       <div className="sm:px-20 gap-10 mt-10 px-4 flex flex-col md:flex-row">
         <div className="flex flex-col md:sticky h-fit top-15 min-w-60 divide-y">
