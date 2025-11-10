@@ -60,7 +60,9 @@ export const BlogCard: FC<BlogCardProps> = ({
 
           {formattedDate && (
             <ItemDescription className="text-xs  flex items-center justify-end">
-              <span className="bg-muted p-2 py-1 rounded-full">{formattedDate}</span>
+              <span className="bg-muted p-2 py-1 rounded-full">
+                {formattedDate}
+              </span>
             </ItemDescription>
           )}
         </ItemContent>

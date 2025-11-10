@@ -26,7 +26,9 @@ export default async function Blogs() {
           Blogs
         </h1>
       </div>
-      <h1 className="text-4xl font-extrabold text-center mt-10">Latest Blogs</h1>
+      <h1 className="text-4xl font-extrabold text-center mt-10">
+        Latest Blogs
+      </h1>
       <ItemGroup className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 py-8 px-4 sm:px-20">
         {blogs.map((b) => (
           <BlogCard

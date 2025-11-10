@@ -29,7 +29,7 @@ const Hero = () => {
           <CarouselItem key={index}>
             <div>
               <Card className="rounded-none p-0">
-                <CardContent className="flex h-fit bg-amber-200 items-center justify-center p-0">
+                <CardContent className="flex h-fit items-center justify-center p-0">
                   <Image
                     src={_}
                     width={0}

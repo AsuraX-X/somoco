@@ -57,7 +57,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/blog"
+                  href="/blogs"
                   className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
                 >
                   Blogs
@@ -104,7 +104,8 @@ export default function Footer() {
                 </h4>
                 <div className="flex items-center space-x-3">
                   <a
-                    href="#"
+                    target="_blank"
+                    href="https://www.facebook.com/somocoghltd/"
                     aria-label="Facebook"
                     title="Facebook"
                     className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
@@ -113,7 +114,8 @@ export default function Footer() {
                   </a>
 
                   <a
-                    href="#"
+                    target="_blank"
+                    href="https://www.instagram.com/somocogh/"
                     aria-label="Instagram"
                     title="Instagram"
                     className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
@@ -121,7 +123,8 @@ export default function Footer() {
                     <Instagram className="w-4 h-4" />
                   </a>
                   <a
-                    href="#"
+                    target="_blank"
+                    href="https://x.com/somocoGhana"
                     aria-label="X"
                     title="X"
                     className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"

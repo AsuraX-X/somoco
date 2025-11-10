@@ -1,12 +1,24 @@
+"use client";
+
 import Schedule from "@/components/Services/Schedule";
+import Services from "@/components/Services/Services";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
-const Services = () => {
+const ServicesPage = () => {
+  const [selectedService, setSelectedService] = useState<string>("");
+
+  const handleScrollToForm = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const form = document.getElementById("schedule-form");
+    if (form) {
+      form.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div>
-      {" "}
       <div className="w-full max-h-[430px] relative h-full">
         <Image
           src={"/service-banner.png"}
@@ -43,7 +55,9 @@ const Services = () => {
               servicing appointment.
             </p>
           </div>
-          <Button className="mt-5 text-xl w-fit">Get in touch</Button>
+          <Button onClick={handleScrollToForm} className="mt-5 text-xl w-fit">
+            Get in touch
+          </Button>
         </div>
         <div className="flex  order-1 md:order-2 gap-8">
           <div className="w-full">
@@ -63,14 +77,17 @@ const Services = () => {
           </div>
         </div>
       </div>
-      <div className="mt-10 border-y px-4 py-20">
+      <div id="schedule-form" className="mt-10 border-y px-4 py-20">
         <h1 className="max-w-3xl mx-auto text-3xl md:text-4xl font-extrabold mb-10">
           Schedule Servicing
         </h1>
-        <Schedule />
+        <Schedule selectedService={selectedService} />
+      </div>
+      <div>
+        <Services onServiceSelect={setSelectedService} />
       </div>
     </div>
   );
 };
 
-export default Services;
+export default ServicesPage;

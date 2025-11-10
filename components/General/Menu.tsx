@@ -22,7 +22,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Input } from "../ui/input";
 import { client } from "@/sanity/lib/client";
 
 type TypesListProps = { types: string[] };
@@ -94,8 +93,8 @@ export function Menu() {
               </DrawerClose>
             </DrawerTitle>
           </DrawerHeader>
-          <div className="flex flex-col sm:flex-row text-white p-4 pb-10 justify-between">
-            <div className="order-2 w-full">
+          <div className="flex flex-col sm:flex-row text-white pb-10 justify-between">
+            <div className="w-full">
               <NavigationMenu viewport={false}>
                 <NavigationMenuList className="flex items-start flex-col gap-2">
                   <NavigationMenuItem>
@@ -139,23 +138,27 @@ export function Menu() {
 
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link className="text-[16px]!" href="/blogs">
-                        Blogs
-                      </Link>
+                      <DrawerClose asChild>
+                        <Link className="text-[16px]!" href="/blogs">
+                          Blogs
+                        </Link>
+                      </DrawerClose>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
 
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link className="text-[16px]!" href="/contact">
-                        Contact Us
-                      </Link>
+                      <DrawerClose asChild>
+                        <Link className="text-[16px]!" href="/contact">
+                          Contact Us
+                        </Link>
+                      </DrawerClose>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
             </div>
-            <div className="sm:block order-3 hidden w-full">
+            <div className="sm:block hidden w-full">
               <Image
                 src={"/menupic.jpg"}
                 unoptimized
@@ -164,9 +167,6 @@ export function Menu() {
                 height={0}
                 className="w-full rounded-lg h-full"
               />
-            </div>
-            <div className="sm:hidden pb-6 order-1 block w-full">
-              <Input placeholder="Search Inventory" />
             </div>
           </div>
         </div>

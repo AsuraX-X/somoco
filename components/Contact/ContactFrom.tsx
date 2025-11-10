@@ -1,72 +1,32 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { client } from "@/sanity/lib/client";
+import React, { useState } from "react";
 import { Field, FieldLabel, FieldContent } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
-type VehicleOption = { _id: string; name?: string };
-
-interface ScheduleProps {
-  selectedService?: string;
-}
-
-export default function Schedule({ selectedService }: ScheduleProps) {
-  const [vehicles, setVehicles] = useState<VehicleOption[]>([]);
+export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [vehicleId, setVehicleId] = useState<string | undefined>(undefined);
-  const [mileage, setMileage] = useState("");
-  const [notes, setNotes] = useState("");
+  const [city, setCity] = useState("");
+  const [region, setRegion] = useState("");
+  const [message, setMessage] = useState("");
   const [agree, setAgree] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (selectedService) {
-      setNotes(selectedService);
-    }
-  }, [selectedService]);
-
-  useEffect(() => {
-    let mounted = true;
-    client
-      .fetch<VehicleOption[]>(`*[_type == "vehicle"]{ _id, name }`)
-      .then((res) => {
-        if (!mounted) return;
-        setVehicles(res || []);
-        if (res?.length) setVehicleId(res[0]._id);
-      })
-      .catch(() => {
-        if (!mounted) return;
-        setVehicles([]);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setSuccess(null);
 
-    if (!name || !email || !phone || !vehicleId || !agree) {
-      setError("Please fill required fields and accept the agreement.");
+    if (!name || !email || !phone || !city || !region || !message || !agree) {
+      setError("Please fill all required fields and accept the agreement.");
       return;
     }
 
@@ -76,14 +36,14 @@ export default function Schedule({ selectedService }: ScheduleProps) {
         name,
         email,
         phone,
-        vehicleId,
-        mileage,
-        notes,
+        city,
+        region,
+        message,
         agree,
         submittedAt: new Date().toISOString(),
       };
 
-      const res = await fetch("/api/schedule", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -91,17 +51,18 @@ export default function Schedule({ selectedService }: ScheduleProps) {
 
       const json = await res.json();
       if (json?.ok) {
-        setSuccess(
-          "Request received. A service advisor will contact you within 48 hours."
-        );
+        setSuccess("Message sent successfully. We will get back to you soon.");
         setName("");
         setEmail("");
         setPhone("");
-        setMileage("");
-        setNotes("");
+        setCity("");
+        setRegion("");
+        setMessage("");
         setAgree(false);
       } else {
-        setError(json?.error ?? "Failed to submit. Please try again later.");
+        setError(
+          json?.error ?? "Failed to send message. Please try again later."
+        );
       }
     } catch (err) {
       setError(String(err));
@@ -157,48 +118,46 @@ export default function Schedule({ selectedService }: ScheduleProps) {
         </Field>
       </div>
 
-      <Field>
-        <FieldLabel>
-          <Label>Vehicle</Label>
-        </FieldLabel>
-        <FieldContent>
-          <Select value={vehicleId} onValueChange={(v) => setVehicleId(v)}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select vehicle" />
-            </SelectTrigger>
-            <SelectContent>
-              {vehicles.map((v) => (
-                <SelectItem key={v._id} value={v._id}>
-                  {v.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </FieldContent>
-      </Field>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field>
+          <FieldLabel>
+            <Label>City *</Label>
+          </FieldLabel>
+          <FieldContent>
+            <Input
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="City name"
+              required
+            />
+          </FieldContent>
+        </Field>
+
+        <Field>
+          <FieldLabel>
+            <Label>Region *</Label>
+          </FieldLabel>
+          <FieldContent>
+            <Input
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+              placeholder="Region name"
+              required
+            />
+          </FieldContent>
+        </Field>
+      </div>
 
       <Field>
         <FieldLabel>
-          <Label>Current mileage</Label>
-        </FieldLabel>
-        <FieldContent>
-          <Input
-            value={mileage}
-            onChange={(e) => setMileage(e.target.value)}
-            placeholder="e.g. 12,000 km"
-          />
-        </FieldContent>
-      </Field>
-
-      <Field>
-        <FieldLabel>
-          <Label>Details</Label>
+          <Label>Message *</Label>
         </FieldLabel>
         <FieldContent>
           <Textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Describe the work or issues you'd like us to check"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Your message"
+            required
           />
         </FieldContent>
       </Field>
@@ -210,9 +169,8 @@ export default function Schedule({ selectedService }: ScheduleProps) {
         />
         <div>
           <div className="md:text-sm text-xs">
-            By submitting this form you will be scheduling a service appointment
-            at no obligation and will be contacted within 48 hours by a service
-            advisor.
+            By submitting this form you agree to be contacted regarding your
+            inquiry.
           </div>
         </div>
       </div>
@@ -222,7 +180,7 @@ export default function Schedule({ selectedService }: ScheduleProps) {
 
       <div>
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? "Sending…" : "Request a Service"}
+          {loading ? "Sending…" : "Send Message"}
         </Button>
       </div>
     </form>

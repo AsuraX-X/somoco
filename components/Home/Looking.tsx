@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const Looking = () => {
   return (
@@ -40,9 +41,11 @@ const Looking = () => {
               We have the most efficient yet durable and low fuel consumption
               motorbikes- Boxer 100 and Boxer 125.
             </p>
-            <Button className="w-fit text-xl px-8 mb-4 h-12 cursor-pointer">
-              Contact Us
-            </Button>
+            <Link href={"/contact"}>
+              <Button className="w-fit text-xl px-8 mb-4 h-12 cursor-pointer">
+                Contact Us
+              </Button>
+            </Link>
           </div>
           <div className="flex flex-col h-full w-full">
             <div className="flex h-full gap-6">

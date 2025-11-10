@@ -130,3 +130,7 @@
       "Apple Color Emoji", "Segoe UI Emoji";
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
