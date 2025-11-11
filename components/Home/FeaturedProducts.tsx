@@ -4,7 +4,7 @@ import { ItemGroup } from "../ui/item";
 import VehicleCard from "@/components/Home/VehicleCard";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import { LATEST_3_VEHICLES } from "@/sanity/lib/queries";
+import { ALL_VEHICLES_FOR_RANDOM } from "@/sanity/lib/queries";
 import type { Vehicle } from "@/sanity.types";
 
 const FeaturedProducts = () => {
@@ -20,7 +20,7 @@ const FeaturedProducts = () => {
 
   useEffect(() => {
     client
-      .fetch(LATEST_3_VEHICLES)
+      .fetch(ALL_VEHICLES_FOR_RANDOM)
       .then(
         (
           res: Array<{
@@ -31,7 +31,11 @@ const FeaturedProducts = () => {
             horsepower?: Vehicle["horsepower"];
           }>
         ) => {
-          const mapped = res.map((v) => ({
+          // Randomly select 3 vehicles from the results
+          const shuffled = res.sort(() => 0.5 - Math.random());
+          const selected = shuffled.slice(0, 3);
+
+          const mapped = selected.map((v) => ({
             id: v._id,
             name: v.name,
             image: v.image

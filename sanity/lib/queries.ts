@@ -45,6 +45,9 @@ export const VEHICLES_FOR_CAROUSEL = `*[_type == "vehicle"]{ _id, name, "image":
 // Latest 3 vehicles (fallback instead of sample()). Use when sample() is unsupported.
 export const LATEST_3_VEHICLES = `*[_type == "vehicle"] | order(_createdAt desc)[0...3]{ _id, name, "image": images[0], engine, horsepower }`;
 
+// Random 3 vehicles for featured products (client-side random selection)
+export const ALL_VEHICLES_FOR_RANDOM = `*[_type == "vehicle"]{ _id, name, "image": images[0], engine, horsepower }`;
+
 const queries = {
   ALL_VEHICLES,
   VEHICLE_PREVIEW_LIST,
