@@ -5,6 +5,8 @@ import VehicleCard from "@/components/Home/VehicleCard";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { ALL_VEHICLES } from "@/sanity/lib/queries";
+import { Empty, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
+import { Search } from "lucide-react";
 
 type VehicleItem = {
   _id: string;
@@ -47,6 +49,20 @@ export default function ProductGrid({ search, selectedType }: Props) {
       }
       return true;
     });
+
+  if (mapped.length === 0) {
+    return (
+      <Empty className="h-full">
+        <Search className="h-12 w-12 text-muted-foreground" />
+        <EmptyTitle>No vehicles found</EmptyTitle>
+        <EmptyDescription>
+          {search || selectedType
+            ? "Try adjusting your search or filter criteria."
+            : "No vehicles are currently available."}
+        </EmptyDescription>
+      </Empty>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

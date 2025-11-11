@@ -30,7 +30,7 @@ export default function SidebarFilters({
   }, []);
 
   return (
-    <aside className="space-y-6 w-full md:w-64 md:border-r md:pr-5 md:h-screen md:sticky top-0">
+    <aside className="space-y-6 w-full md:w-64 md:border-r md:pr-5 md:h-screen md:sticky top-10">
       <div>
         <Label className="mb-2">Search</Label>
         <Input
