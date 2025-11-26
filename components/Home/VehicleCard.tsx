@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import React from "react";
 
 import {
   Item,
@@ -52,7 +51,7 @@ export default function VehicleCard({
             width={128}
             height={128}
             unoptimized
-            className="aspect-square z-10 w-full rounded-sm object-cover"
+            className="aspect-square z-10 w-full rounded-sm object-contain"
           />
         ) : (
           <div className="aspect-square z-10 w-full rounded-sm bg-muted-foreground/10" />
@@ -74,9 +73,17 @@ export default function VehicleCard({
             <span className=" text-wrap">{horsepower}</span>
           </ItemDescription>
         </ItemContent>
-        <ItemActions className="">
-          <Button className="w-full mt-4" onClick={handleView}>
+        <ItemActions className="flex gap-4">
+          <Button className="mt-4 flex-1" onClick={handleView}>
             View Details
+          </Button>
+          <Button
+            className="flex-1 mt-4"
+            onClick={() => {
+              if (id) router.push(`/compare?v1=${encodeURIComponent(id)}`);
+            }}
+          >
+            Compare
           </Button>
         </ItemActions>
       </div>

@@ -8,6 +8,7 @@ import {
 } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import VehicleCard from "@/components/Home/VehicleCard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
@@ -27,7 +28,6 @@ const VehicleCarousel = () => {
   >([]);
   // selected is a 0-based index of the currently visible slide
   const [selected, setSelected] = useState(0);
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
     // Fetch vehicles from Sanity
@@ -68,7 +68,6 @@ const VehicleCarousel = () => {
 
     // Defer initial state updates to avoid synchronous setState inside effect
     const t = window.setTimeout(() => {
-      setCount(api.scrollSnapList().length);
       setSelected(api.selectedScrollSnap());
     }, 0);
 
@@ -103,38 +102,59 @@ const VehicleCarousel = () => {
           className="flex cursor-grab active:cursor-grabbing flex-col gap-6"
         >
           <CarouselContent>
-            {models.map((model, i) => (
-              <CarouselItem
-                className="md:basis-1/2 lg:basis-1/3"
-                key={model.id ?? i}
-              >
-                <VehicleCard
-                  id={model.id}
-                  name={model.name}
-                  image={model.image}
-                  engine={model.engine}
-                  horsepower={model.horsepower}
-                />
-              </CarouselItem>
-            ))}
+            {models.length > 0
+              ? models.map((model, i) => (
+                  <CarouselItem
+                    className="md:basis-1/2 lg:basis-1/3"
+                    key={model.id ?? i}
+                  >
+                    <VehicleCard
+                      id={model.id}
+                      name={model.name}
+                      image={model.image}
+                      engine={model.engine}
+                      horsepower={model.horsepower}
+                    />
+                  </CarouselItem>
+                ))
+              : // Loading placeholders
+                Array.from({ length: 3 }).map((_, i) => (
+                  <CarouselItem
+                    className="md:basis-1/2 lg:basis-1/3"
+                    key={`placeholder-${i}`}
+                  >
+                    <div className="border rounded-lg p-4 space-y-4">
+                      <Skeleton className="aspect-square w-full rounded-md" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-4 w-1/2" />
+                        <Skeleton className="h-4 w-2/3" />
+                      </div>
+                      <div className="flex gap-2">
+                        <Skeleton className="h-9 flex-1" />
+                        <Skeleton className="h-9 flex-1" />
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
           </CarouselContent>
         </Carousel>
         <div className="py-6">
           <div className="flex items-center justify-center gap-2">
-            {Array.from({ length: count }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => api?.scrollTo(i)}
-                aria-label={`Go to slide ${i + 1}`}
-                aria-current={selected === i ? "true" : undefined}
-                className={
-                  "h-3 w-3 rounded-full transition-colors focus:outline-none " +
-                  (selected === i
-                    ? "bg-foreground"
-                    : "bg-muted-foreground/40 hover:bg-muted-foreground/60")
-                }
-              />
-            ))}
+            {models.length > 0 &&
+              Array.from({ length: models.length }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => api?.scrollTo(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  aria-current={selected === i ? "true" : undefined}
+                  className={`h-3 w-3 cursor-pointer rounded-full transition-colors focus:outline-none ${
+                    selected === i
+                      ? "bg-primary"
+                      : "bg-muted-foreground/60 hover:bg-muted-foreground/80"
+                  }`}
+                />
+              ))}
           </div>
         </div>
       </div>

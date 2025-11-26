@@ -1,12 +1,12 @@
 // Centralized GROQ queries for the project
 // Keep queries here so they can be reused across components and pages.
 
-export const ALL_VEHICLES = `*[_type == "vehicle"]{ _id, name, "image": images[0], engine, horsepower, headerImage1, headerImage2, type }`;
+export const ALL_VEHICLES = `*[_type == "vehicle" && disabled != true]{ _id, name, "image": images[1], engine, horsepower, headerImage1, headerImage2, type }`;
 
-export const VEHICLE_PREVIEW_LIST = `*[_type == "vehicle"]{ _id, name, "slug": slug.current, "image": images[0] }`;
+export const VEHICLE_PREVIEW_LIST = `*[_type == "vehicle" && disabled != true]{ _id, name, "slug": slug.current, "image": images[1] }`;
 
 // Fetch a single vehicle by _id. Pass {"id": "<docId>"} as params.
-export const VEHICLE_BY_ID = `*[_type == "vehicle" && _id == $id][0]{
+export const VEHICLE_BY_ID = `*[_type == "vehicle" && _id == $id && disabled != true][0]{
   _id,
   name,
   slug,
@@ -23,7 +23,7 @@ export const VEHICLE_BY_ID = `*[_type == "vehicle" && _id == $id][0]{
 }`;
 
 // Fetch a single vehicle by slug. Pass {"slug": "the-slug"} as params.
-export const VEHICLE_BY_SLUG = `*[_type == "vehicle" && slug.current == $slug][0]{
+export const VEHICLE_BY_SLUG = `*[_type == "vehicle" && slug.current == $slug && disabled != true][0]{
   _id,
   name,
   slug,
@@ -40,13 +40,13 @@ export const VEHICLE_BY_SLUG = `*[_type == "vehicle" && slug.current == $slug][0
 }`;
 
 // Lightweight list used for components like the homepage carousel (first image + basic fields)
-export const VEHICLES_FOR_CAROUSEL = `*[_type == "vehicle"]{ _id, name, "image": images[0], engine, horsepower, type }`;
+export const VEHICLES_FOR_CAROUSEL = `*[_type == "vehicle" && disabled != true]{ _id, name, "image": images[1], engine, horsepower, type }`;
 
 // Latest 3 vehicles (fallback instead of sample()). Use when sample() is unsupported.
-export const LATEST_3_VEHICLES = `*[_type == "vehicle"] | order(_createdAt desc)[0...3]{ _id, name, "image": images[0], engine, horsepower }`;
+export const LATEST_3_VEHICLES = `*[_type == "vehicle" && disabled != true] | order(_createdAt desc)[0...3]{ _id, name, "image": images[1], engine, horsepower }`;
 
 // Random 3 vehicles for featured products (client-side random selection)
-export const ALL_VEHICLES_FOR_RANDOM = `*[_type == "vehicle"]{ _id, name, "image": images[0], engine, horsepower }`;
+export const ALL_VEHICLES_FOR_RANDOM = `*[_type == "vehicle" && disabled != true]{ _id, name, "image": images[1], engine, horsepower }`;
 
 const queries = {
   ALL_VEHICLES,

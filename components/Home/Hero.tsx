@@ -9,12 +9,18 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Hero = () => {
   const banners = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg"];
+  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
 
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }));
+
+  const handleImageLoad = (src: string) => {
+    setImagesLoaded((prev) => ({ ...prev, [src]: true }));
+  };
 
   return (
     <Carousel
@@ -25,18 +31,24 @@ const Hero = () => {
       className="mx-auto car cursor-grab active:cursor-grabbing relative max-w-screen"
     >
       <CarouselContent>
-        {banners.map((_, index) => (
+        {banners.map((banner, index) => (
           <CarouselItem key={index}>
             <div>
               <Card className="rounded-none p-0">
                 <CardContent className="flex h-fit items-center justify-center p-0">
+                  {!imagesLoaded[banner] && (
+                    <Skeleton className="w-screen h-[400px] sm:h-[500px] lg:h-[600px]" />
+                  )}
                   <Image
-                    src={_}
+                    src={banner}
                     width={0}
                     height={0}
                     unoptimized
                     alt={`banner image-${index + 1}`}
-                    className="w-full h-full object cover"
+                    className={`w-full h-full object-cover ${
+                      imagesLoaded[banner] ? "opacity-100" : "opacity-0"
+                    } transition-opacity duration-300`}
+                    onLoad={() => handleImageLoad(banner)}
                   />
                 </CardContent>
               </Card>

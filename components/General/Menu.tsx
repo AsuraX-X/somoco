@@ -135,6 +135,15 @@ export function Menu() {
                       </DrawerClose>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                      <DrawerClose asChild>
+                        <Link className="text-[16px]!" href="/spare-parts">
+                          Spare Parts
+                        </Link>
+                      </DrawerClose>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
 
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild>

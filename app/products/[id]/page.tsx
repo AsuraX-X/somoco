@@ -16,6 +16,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import BackButton from "@/components/General/BackButton";
 
 type Props = {
   params: { id: string };
@@ -120,9 +121,10 @@ export default async function VehiclePage({ params }: Props) {
     return (
       <div>
         <div
-          className="w-full h-[60vh] bg-cover bg-center flex items-end p-4"
+          className="w-full h-[60vh] relative bg-cover bg-center flex items-end p-4"
           style={{ backgroundImage: `url(${header1})` }}
         >
+          <BackButton className="bg-white/20 absolute top-4 left-4 z-20" />
           <h1 className="text-4xl sm:text-6xl font-bold text-white  px-6 py-3 rounded">
             {vehicle.name}
           </h1>

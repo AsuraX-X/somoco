@@ -134,3 +134,12 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Helper to visually hide scrollbars while keeping native scroll behavior */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

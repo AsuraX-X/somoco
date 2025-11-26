@@ -30,6 +30,20 @@ export const vehicle = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
+      name: "disabled",
+      title: "Disabled",
+      type: "boolean",
+      description: "Hide this vehicle from the website",
+      initialValue: false,
+    },
+    {
+      name: "ranking",
+      title: "Ranking",
+      type: "number",
+      description: "Display order ranking (lower numbers appear first)",
+      validation: (Rule: Rule) => Rule.min(0),
+    },
+    {
       name: "description",
       title: "Description",
       type: "array",

@@ -159,14 +159,14 @@ export default function Schedule({ selectedService }: ScheduleProps) {
 
       <Field>
         <FieldLabel>
-          <Label>Vehicle</Label>
+          <Label>Vehicle *</Label>
         </FieldLabel>
         <FieldContent>
           <Select value={vehicleId} onValueChange={(v) => setVehicleId(v)}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select vehicle" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-background">
               {vehicles.map((v) => (
                 <SelectItem key={v._id} value={v._id}>
                   {v.name}
