@@ -14,7 +14,7 @@ export default async function BlogByIdPage({ params }: Props) {
     return <div className="py-24 text-center">Blog not found</div>;
   }
 
-  const query = `*[_type == "blog" && _id == $id][0]{_id, title, excerpt, body, mainImage, _createdAt}`;
+  const query = `*[_type == "blog" && _id == $id][0]{_id, title, excerpt, body, mainImage, publishedAt}`;
   const blog = await client.fetch<Blog | null>(query, { id });
 
   if (!blog) {
@@ -24,8 +24,8 @@ export default async function BlogByIdPage({ params }: Props) {
   const md = new MarkdownIt({ html: true });
   const html = md.render(blog.body || "");
 
-  const createdAt = blog._createdAt
-    ? new Date(blog._createdAt).toLocaleString("en-US", {
+  const publishedAt = blog.publishedAt
+    ? new Date(blog.publishedAt).toLocaleString("en-US", {
         dateStyle: "medium",
         timeStyle: "short",
       })
@@ -47,8 +47,8 @@ export default async function BlogByIdPage({ params }: Props) {
       )}
 
       <h1 className="text-3xl font-semibold mb-2">{blog.title}</h1>
-      {createdAt && (
-        <div className="text-sm text-muted-foreground mb-6">{createdAt}</div>
+      {publishedAt && (
+        <div className="text-sm text-muted-foreground mb-6">{publishedAt}</div>
       )}
 
       {blog.excerpt && (

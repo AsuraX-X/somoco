@@ -14,7 +14,7 @@ type BlogCardProps = {
   title?: string | null;
   excerpt?: string | null;
   id?: string | null;
-  createdAt?: string | null;
+  publishedAt?: string | null;
 };
 
 export const BlogCard: FC<BlogCardProps> = ({
@@ -22,15 +22,15 @@ export const BlogCard: FC<BlogCardProps> = ({
   title,
   excerpt,
   id,
-  createdAt,
+  publishedAt,
 }) => {
   const alt = title || "Blog image";
   const src = image || "/placeholder-article.png";
 
   const formattedDate = (() => {
-    if (!createdAt) return null;
+    if (!publishedAt) return null;
     try {
-      const d = new Date(createdAt);
+      const d = new Date(publishedAt);
       return d.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
@@ -42,31 +42,32 @@ export const BlogCard: FC<BlogCardProps> = ({
   })();
 
   return (
-    <Link href={id ? `/blogs/${id}` : `#`} className="block">
-      <Item variant="outline" className="relative overflow-hidden">
-        <ItemHeader>
+    <Link href={id ? `/blogs/${id}` : `#`} className="h-100">
+      <div className="flex flex-col h-full">
+        <div className="flex-1">
           <Image
             src={src}
             alt={alt}
             width={320}
             height={200}
             unoptimized
-            className="w-full rounded-sm object-cover"
+            className="w-full h-full rounded-t-sm aspect-video object-cover"
           />
-        </ItemHeader>
-        <ItemContent>
-          <ItemTitle className="text-2xl">{title}</ItemTitle>
-          <ItemDescription>{excerpt}</ItemDescription>
-
+        </div>
+        <div className="flex-1 py-5 px-4 rounded-b-sm border justify-between flex flex-col">
+          <div>
+            <h1 className="text-[22px] line-clamp-2">{title}</h1>
+            <p className=" line-clamp-3 text-sm text-black/60">{excerpt}</p>
+          </div>
           {formattedDate && (
-            <ItemDescription className="text-xs  flex items-center justify-end">
+            <p className="text-xs place-self-end">
               <span className="bg-muted p-2 py-1 rounded-full">
                 {formattedDate}
               </span>
-            </ItemDescription>
+            </p>
           )}
-        </ItemContent>
-      </Item>
+        </div>
+      </div>
     </Link>
   );
 };

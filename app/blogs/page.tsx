@@ -6,7 +6,7 @@ import { urlFor } from "@/sanity/lib/image";
 import type { Blog } from "@/sanity.types";
 import Image from "next/image";
 
-const query = `*[_type == "blog"] | order(_createdAt desc){_id, title, excerpt, mainImage, _createdAt}`;
+const query = `*[_type == "blog"] | order(publishedAt desc){_id, title, excerpt, mainImage, publishedAt}`;
 
 export default async function Blogs() {
   const blogs = (await client.fetch<Blog[]>(query)) || [];
@@ -39,7 +39,7 @@ export default async function Blogs() {
             title={b.title}
             excerpt={b.excerpt}
             id={b._id}
-            createdAt={b._createdAt}
+            publishedAt={b.publishedAt}
           />
         ))}
       </ItemGroup>

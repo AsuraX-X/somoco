@@ -29,6 +29,14 @@ export const blog = defineType({
     }),
 
     defineField({
+      name: "publishedAt",
+      title: "Published at",
+      type: "datetime",
+      description: "The date and time the post is published",
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
       name: "mainImage",
       title: "Main image",
       type: "image",
