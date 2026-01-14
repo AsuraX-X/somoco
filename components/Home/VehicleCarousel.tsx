@@ -95,6 +95,7 @@ const VehicleCarousel = () => {
       <div className="py-8">
         <Carousel
           opts={{
+            align: "start",
             loop: true,
           }}
           plugins={[plugin.current]}
