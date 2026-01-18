@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { ItemGroup } from "../ui/item";
-import VehicleCard from "@/components/Home/VehicleCard";
+import VehicleCard from "@/components/General/VehicleCard";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { ALL_VEHICLES_FOR_RANDOM } from "@/sanity/lib/queries";
@@ -29,7 +29,7 @@ const FeaturedProducts = () => {
             image?: Vehicle["images"] extends Array<infer U> ? U : unknown;
             engine?: Vehicle["engine"];
             horsepower?: Vehicle["horsepower"];
-          }>
+          }>,
         ) => {
           // Randomly select 3 vehicles from the results
           const shuffled = res.sort(() => 0.5 - Math.random());
@@ -45,7 +45,7 @@ const FeaturedProducts = () => {
             horsepower: v.horsepower,
           }));
           setModels(mapped);
-        }
+        },
       )
       .catch((err) => console.error("Failed to fetch featured vehicles", err));
   }, []);

@@ -1,15 +1,17 @@
 import FeaturedProducts from "@/components/Home/FeaturedProducts";
 import Hero from "@/components/Home/Hero";
 import Looking from "@/components/Home/Looking";
+import TyreCarousel from "@/components/Home/TyreCarousel";
 import VehicleCarousel from "@/components/Home/VehicleCarousel";
 import Why from "@/components/Home/Why";
 import Image from "next/image";
 
 const Home = () => {
   return (
-    <div className="space-y-151">
+    <div className="space-y-15">
       <Hero />
       <VehicleCarousel />
+      <TyreCarousel />
       <Looking />
       <FeaturedProducts />
       <Why />

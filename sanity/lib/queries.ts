@@ -49,12 +49,16 @@ export const LATEST_3_VEHICLES = `*[_type == "vehicle" && disabled != true] | or
 // Random 3 vehicles for featured products (client-side random selection)
 export const ALL_VEHICLES_FOR_RANDOM = `*[_type == "vehicle" && disabled != true]{ _id, name, ranking, "image": images[1], engine, horsepower }`;
 
+// Lightweight list used for the tyres carousel. Includes brand and sizes and a single image.
+export const TYRES_FOR_CAROUSEL = `*[_type == "tyres" && disabled != true] | order(coalesce(ranking, 9999) asc, brand asc){ _id, name, brand, ranking, "image": images[0], sizes }`;
+
 const queries = {
   ALL_VEHICLES,
   VEHICLE_PREVIEW_LIST,
   VEHICLE_BY_ID,
   VEHICLE_BY_SLUG,
   VEHICLES_FOR_CAROUSEL,
+  TYRES_FOR_CAROUSEL,
   LATEST_3_VEHICLES,
 };
 

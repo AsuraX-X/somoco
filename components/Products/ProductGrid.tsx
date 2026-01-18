@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import VehicleCard from "@/components/Home/VehicleCard";
+import VehicleCard from "@/components/General/VehicleCard";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { ALL_VEHICLES } from "@/sanity/lib/queries";
