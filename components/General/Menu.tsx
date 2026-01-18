@@ -1,9 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { X } from "lucide-react";
+import { X, ChevronRight, ChevronLeft } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -14,42 +13,35 @@ import {
 } from "@/components/ui/drawer";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
 import { client } from "@/sanity/lib/client";
+import { Button } from "../ui/button";
+import { AnimatePresence, motion } from "motion/react";
 
-type TypesListProps = { types: string[] };
+type TypesListProps = { types: string[]; basePath?: string };
 
-function TypesListComp({ types }: TypesListProps) {
+function TypesListComp({ types, basePath = "/vehicles" }: TypesListProps) {
+  const name = basePath.replace("/", "");
+  const title = name.charAt(0).toUpperCase() + name.slice(1);
+
   return (
     <ul className="grid grid-cols-2 text-white gap-2">
       <li>
-        <NavigationMenuLink asChild>
-          <DrawerClose asChild>
-            <Link className="text-[16px]!" href="/products">
-              All Products
-            </Link>
-          </DrawerClose>
-        </NavigationMenuLink>
+        <DrawerClose asChild>
+          <Link className="text-[16px] hover:underline" href={basePath}>
+            {`All ${title}`}
+          </Link>
+        </DrawerClose>
       </li>
       {types.map((t) => (
         <li key={t}>
-          <NavigationMenuLink asChild>
-            <DrawerClose asChild>
-              <Link
-                className="text-[16px]!"
-                href={`/products?type=${encodeURIComponent(t)}`}
-              >
-                {t}
-              </Link>
-            </DrawerClose>
-          </NavigationMenuLink>
+          <DrawerClose asChild>
+            <Link
+              className="text-[16px] hover:underline"
+              href={`${basePath}?type=${encodeURIComponent(t)}`}
+            >
+              {t}
+            </Link>
+          </DrawerClose>
         </li>
       ))}
     </ul>
@@ -58,6 +50,17 @@ function TypesListComp({ types }: TypesListProps) {
 
 export function Menu() {
   const [types, setTypes] = React.useState<string[]>([]);
+  const [batteryTypes, setBatteryTypes] = React.useState<string[]>([
+    "Battery A",
+    "Battery B",
+  ]);
+  const [tyreTypes, setTyreTypes] = React.useState<string[]>([
+    "Tyre X",
+    "Tyre Y",
+  ]);
+  const [view, setView] = React.useState<
+    "main" | "vehicles" | "batteries" | "tyres"
+  >("main");
 
   React.useEffect(() => {
     // fetch type values from vehicle documents and dedupe
@@ -93,79 +96,187 @@ export function Menu() {
               </DrawerClose>
             </DrawerTitle>
           </DrawerHeader>
-          <div className="flex flex-col sm:flex-row text-white pb-10 justify-between">
-            <div className="w-full">
-              <NavigationMenu viewport={false}>
-                <NavigationMenuList className="flex items-start flex-col gap-2">
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                      <DrawerClose asChild>
-                        <Link className="text-[16px]!" href="/">
-                          Home
-                        </Link>
-                      </DrawerClose>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
+          <div className="flex flex-col h-full items-start sm:flex-row text-white pb-10 justify-between">
+            <div className="w-full h-full">
+              <nav className="relative h-full">
+                <AnimatePresence mode="wait">
+                  {view === "main" ? (
+                    <motion.ul
+                      key="main"
+                      initial={{ x: 0, opacity: 1 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: 0, opacity: 0 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute inset-0 flex h-full flex-col gap-4"
+                    >
+                      <li>
+                        <DrawerClose asChild>
+                          <Link
+                            className="text-[16px] hover:underline"
+                            href="/"
+                          >
+                            Home
+                          </Link>
+                        </DrawerClose>
+                      </li>
 
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                      <DrawerClose asChild>
-                        <Link className="text-[16px]!" href="/about">
-                          About Us
-                        </Link>
-                      </DrawerClose>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
+                      <li>
+                        <DrawerClose asChild>
+                          <Link
+                            className="text-[16px] hover:underline"
+                            href="/about"
+                          >
+                            About Us
+                          </Link>
+                        </DrawerClose>
+                      </li>
 
-                  <NavigationMenuItem className="relative">
-                    <NavigationMenuTrigger className="bg-primary text-[16px] p-2">
-                      Products
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent className="md:left-full! md:top-0! md:ml-2 p-0.5 min-w-60 border-0! md:-translate-y-2">
-                      <TypesListComp types={types} />
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
+                      <li>
+                        <button
+                          onClick={() => setView("vehicles")}
+                          className="flex items-center w-full"
+                          aria-expanded={false}
+                        >
+                          <span>Vehicles</span>
+                          <ChevronRight size={18} />
+                        </button>
+                      </li>
 
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                      <DrawerClose asChild>
-                        <Link className="text-[16px]!" href="/services">
-                          Services
-                        </Link>
-                      </DrawerClose>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                      <DrawerClose asChild>
-                        <Link className="text-[16px]!" href="/spare-parts">
-                          Spare Parts
-                        </Link>
-                      </DrawerClose>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
+                      <li>
+                        <button
+                          onClick={() => setView("batteries")}
+                          className="flex items-center w-full"
+                        >
+                          <span>Batteries</span>
+                          <ChevronRight size={18} />
+                        </button>
+                      </li>
 
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                      <DrawerClose asChild>
-                        <Link className="text-[16px]!" href="/blogs">
-                          Blogs
-                        </Link>
-                      </DrawerClose>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
+                      <li>
+                        <button
+                          onClick={() => setView("tyres")}
+                          className="flex items-center w-full"
+                        >
+                          <span>Tyres</span>
+                          <ChevronRight size={18} />
+                        </button>
+                      </li>
 
-                  <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                      <DrawerClose asChild>
-                        <Link className="text-[16px]!" href="/contact">
-                          Contact Us
-                        </Link>
-                      </DrawerClose>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+                      <li>
+                        <DrawerClose asChild>
+                          <Link
+                            className="text-[16px] hover:underline"
+                            href="/services"
+                          >
+                            Services
+                          </Link>
+                        </DrawerClose>
+                      </li>
+                      <li>
+                        <DrawerClose asChild>
+                          <Link
+                            className="text-[16px] hover:underline"
+                            href="/spare-parts"
+                          >
+                            Spare Parts
+                          </Link>
+                        </DrawerClose>
+                      </li>
+
+                      <li>
+                        <DrawerClose asChild>
+                          <Link
+                            className="text-[16px] hover:underline"
+                            href="/blogs"
+                          >
+                            Blogs
+                          </Link>
+                        </DrawerClose>
+                      </li>
+
+                      <li>
+                        <DrawerClose asChild>
+                          <Link
+                            className="text-[16px] hover:underline"
+                            href="/contact"
+                          >
+                            Contact Us
+                          </Link>
+                        </DrawerClose>
+                      </li>
+                    </motion.ul>
+                  ) : view === "vehicles" ? (
+                    <motion.ul
+                      key="vehicles"
+                      initial={{ x: "-100%", opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: "-100%", opacity: 0 }}
+                      transition={{ duration: 0.22 }}
+                      className="absolute inset-0 flex h-full flex-col gap-4"
+                    >
+                      <li>
+                        <button
+                          onClick={() => setView("main")}
+                          className="flex items-center gap-2"
+                        >
+                          <ChevronLeft size={18} />
+                          <span>Back</span>
+                        </button>
+                      </li>
+                      <li className="mt-2">
+                        <TypesListComp types={types} basePath="/vehicles" />
+                      </li>
+                    </motion.ul>
+                  ) : view === "batteries" ? (
+                    <motion.ul
+                      key="batteries"
+                      initial={{ x: "-100%", opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: "-100%", opacity: 0 }}
+                      transition={{ duration: 0.22 }}
+                      className="absolute inset-0 flex h-full flex-col gap-4"
+                    >
+                      <li>
+                        <button
+                          onClick={() => setView("main")}
+                          className="flex items-center gap-2"
+                        >
+                          <ChevronLeft size={18} />
+                          <span>Back</span>
+                        </button>
+                      </li>
+                      <li className="mt-2">
+                        <TypesListComp
+                          types={batteryTypes}
+                          basePath="/batteries"
+                        />
+                      </li>
+                    </motion.ul>
+                  ) : (
+                    <motion.ul
+                      key="tyres"
+                      initial={{ x: "-100%", opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: "-100%", opacity: 0 }}
+                      transition={{ duration: 0.22 }}
+                      className="absolute inset-0 flex h-full flex-col gap-4"
+                    >
+                      <li>
+                        <button
+                          onClick={() => setView("main")}
+                          className="flex items-center gap-2"
+                        >
+                          <ChevronLeft size={18} />
+                          <span>Back</span>
+                        </button>
+                      </li>
+                      <li className="mt-2">
+                        <TypesListComp types={tyreTypes} basePath="/tyres" />
+                      </li>
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </nav>
             </div>
             <div className="sm:block hidden w-full">
               <Image

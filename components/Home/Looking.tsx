@@ -37,15 +37,9 @@ const Looking = () => {
                 ECONOMICAL BIKE?
               </span>
             </h1>
-            <p>
-              We have the most efficient yet durable and low fuel consumption
-              motorbikes- Boxer 100 and Boxer 125.
+            <p className="text-2xl">
+              We have the most durable and fuel-efficient motorbikes.
             </p>
-            <Link href={"/contact"}>
-              <Button className="w-fit text-xl px-8 mb-4 h-12 cursor-pointer">
-                Contact Us
-              </Button>
-            </Link>
           </div>
           <div className="flex flex-col h-full w-full">
             <div className="flex h-full gap-6">
@@ -69,7 +63,7 @@ const Looking = () => {
               </div>
             </div>
             <div className="flex flex-col">
-              <h2 className="font-extrabold text-3xl/6 mt-2">
+              <h2 className="font-extrabold text-2xl/6 mt-2">
                 LOOKING FOR GENUINE BIKE ACCESSORIES?
               </h2>
               <p>
