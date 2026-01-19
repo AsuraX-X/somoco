@@ -118,15 +118,8 @@ export const tyre = {
   preview: {
     select: {
       title: "name",
-      brand: "brand",
+      subtitle: "brand",
       media: "headerImage1",
-    },
-    prepare(selection: { title?: string; brand?: string; media?: unknown }) {
-      const { title, brand, media } = selection;
-      return {
-        title: title || brand || "Untitled tyre",
-        media,
-      };
     },
   },
 };
