@@ -82,19 +82,19 @@ export default function Footer() {
               <div className="flex items-center gap-2">
                 <Mail size={20} />
                 <a
-                  href="mailto:marketing1@somotex.com"
+                  href="mailto:b2b1@somotex.com"
                   className="block text-white/80 hover:underline"
                 >
-                  marketing1@somotex.com
+                  b2b1@somotex.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone size={20} />
                 <a
-                  href="tel:+233540105131"
+                  href="tel:+233531033489"
                   className="block text-white/80 hover:underline"
                 >
-                  +233 540 105 131
+                  +233 531 033 489
                 </a>
               </div>
 

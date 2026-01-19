@@ -34,7 +34,7 @@ const Why = () => {
   return (
     <div className="px-4 sm:px-8 ">
       <h1 className="text-3xl text-center sm:text-4xl font-bold">
-        WHY TO CHOOSE SOMOCO?
+        WHY CHOOSE SOMOCO?
       </h1>
       <div className="flex py-8 w-full flex-col gap-6">
         <ItemGroup className="gap-4 grid sm:grid-cols-2">
