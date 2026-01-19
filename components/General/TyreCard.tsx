@@ -27,19 +27,22 @@ export default function TyreCard({ name, brand, image, sizes, id }: Props) {
     if (id) router.push(`/tyres/${id}`);
   };
 
-  const sizesText = sizes && sizes.length ? sizes.join(", ") : "N/A";
+  const sizesList =
+    sizes && sizes.length ? (
+      <span className="flex flex-col gap-1 text-sm">
+        {sizes.map((s) => (
+          <span key={s} className="leading-tight">
+            {s}
+          </span>
+        ))}
+      </span>
+    ) : (
+      <div className="text-sm">N/A</div>
+    );
 
   return (
     <Item variant={"outline"}>
       <ItemHeader className="relative">
-        <Image
-          src={"/inner-bg.png"}
-          alt={"background"}
-          width={128}
-          height={128}
-          unoptimized
-          className="aspect-square absolute w-full rounded-sm object-cover"
-        />
         {image ? (
           <Image
             src={image}
@@ -47,7 +50,7 @@ export default function TyreCard({ name, brand, image, sizes, id }: Props) {
             width={128}
             height={128}
             unoptimized
-            className="aspect-square z-10 w-full rounded-sm object-contain"
+            className="z-10 w-full aspect-square rounded-sm object-contain"
           />
         ) : (
           <div className="aspect-square z-10 w-full rounded-sm bg-muted-foreground/10" />
@@ -58,9 +61,12 @@ export default function TyreCard({ name, brand, image, sizes, id }: Props) {
           <ItemTitle>{name ?? brand}</ItemTitle>
           <ItemDescription className="flex items-center w-full gap-2 ">
             <span className="bg-black/5 size-10 rounded-full aspect-square flex items-center justify-center">
-              <Image src={"/tyre.svg"} width={30} height={30} alt="tyre" />
+              <Image src={"/tyre.svg"} width={25} height={25} alt="tyre" />
             </span>
-            <span className=" text-wrap">Available sizes: {sizesText}</span>
+            <span className="text-wrap">
+              <span className="text-sm font-medium">Available sizes:</span>
+              <span className="mt-1">{sizesList}</span>
+            </span>
           </ItemDescription>
         </ItemContent>
         <ItemActions className="flex gap-4">

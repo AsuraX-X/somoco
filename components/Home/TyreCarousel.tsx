@@ -22,7 +22,7 @@ const TyreCarousel = () => {
       mapToKey={(t: TyreCarouselItem) => t._id ?? ""}
       renderCard={(t: TyreCarouselItem) => {
         const image = t.image
-          ? urlFor(t.image).width(800).height(600).url()
+          ? urlFor(t.image).auto("format").url()
           : undefined;
         return (
           <TyreCard

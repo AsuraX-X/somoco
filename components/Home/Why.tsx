@@ -22,7 +22,7 @@ const Why = () => {
     },
     {
       title: "Trusted By Millions",
-      desc: "Bajaj Auto, the world’s 3rd largest maker of 2 & 3 wheelers. Trusted globally.",
+      desc: "Bajaj Auto, the world’s 3rd largest manufacturer of 2 & 3 wheelers. Trusted globally.",
       icon: <Handshake className="size-6" />,
     },
     {

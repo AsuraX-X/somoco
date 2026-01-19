@@ -11,6 +11,10 @@ type Props = {
   setSearch: (v: string) => void;
   selectedType?: string;
   setSelectedType: (v?: string) => void;
+  contentType: string; // "vehicle" or "tyre"
+  filterField: string; // "type" for vehicles, "brand" for tyres
+  filterLabel: string; // "Type" for vehicles, "Brand" for tyres
+  searchPlaceholder: string; // "Search vehicles..." or "Search tyres..."
 };
 
 export default function SidebarFilters({
@@ -18,16 +22,22 @@ export default function SidebarFilters({
   setSearch,
   selectedType,
   setSelectedType,
+  contentType,
+  filterField,
+  filterLabel,
+  searchPlaceholder,
 }: Props) {
   const [types, setTypes] = useState<string[]>([]);
 
   useEffect(() => {
-    // Fetch just the type fields and dedupe on the client
-    client.fetch<string[]>(`*[_type == "vehicle"].type`).then((res) => {
-      const t = Array.from(new Set(res.filter(Boolean)));
-      setTypes(t as string[]);
-    });
-  }, []);
+    // Fetch the filter field and dedupe on the client
+    client
+      .fetch<string[]>(`*[_type == "${contentType}"].${filterField}`)
+      .then((res) => {
+        const t = Array.from(new Set(res.filter(Boolean)));
+        setTypes(t as string[]);
+      });
+  }, [contentType, filterField]);
 
   return (
     <aside className="space-y-6 w-full md:w-64 md:border-r md:pr-5 md:h-screen md:sticky top-10">
@@ -36,12 +46,12 @@ export default function SidebarFilters({
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search vehicles..."
+          placeholder={searchPlaceholder}
         />
       </div>
 
       <div>
-        <h3 className="text-sm font-medium mb-2">Type</h3>
+        <h3 className="text-sm font-medium mb-2">{filterLabel}</h3>
         <RadioGroup
           value={selectedType ?? ""}
           onValueChange={(val) => setSelectedType(val === "" ? undefined : val)}

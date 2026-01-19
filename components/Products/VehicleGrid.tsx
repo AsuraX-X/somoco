@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import VehicleCard from "@/components/General/VehicleCard";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
@@ -22,7 +22,7 @@ type Props = {
   selectedType?: string;
 };
 
-export default function ProductGrid({ search, selectedType }: Props) {
+export default function VehicleGrid({ search, selectedType }: Props) {
   const [items, setItems] = useState<Array<VehicleItem>>([]);
 
   useEffect(() => {

@@ -33,13 +33,17 @@ const Looking = () => {
             <h1 className="flex font-extrabold text-3xl lg:text-5xl flex-col gap-2">
               <span>ARE YOU</span> <span> LOOKING FOR AN</span>
               <span className=" lg:text-[90px] text-6xl  whitespace-nowrap z-10 -ml-50 lg:-ml-100">
-                {" "}
                 ECONOMICAL BIKE?
               </span>
             </h1>
             <p className="text-2xl">
               We have the most durable and fuel-efficient motorbikes.
             </p>
+            <Link href={"/contact"}>
+              <Button className="w-fit text-xl px-8 mb-4 h-12 cursor-pointer">
+                Contact Us
+              </Button>
+            </Link>
           </div>
           <div className="flex flex-col h-full w-full">
             <div className="flex h-full gap-6">
@@ -122,7 +126,7 @@ const Looking = () => {
             </h2>
             <p>
               We have a wide portfolio of parts and accessories for your biking
-              needs. Call 054 011 2783 today! CONTACT US
+              needs. Call 054 011 2783 today!
             </p>
           </div>
         </div>

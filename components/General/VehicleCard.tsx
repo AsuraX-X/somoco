@@ -31,7 +31,7 @@ export default function VehicleCard({
   const router = useRouter();
 
   const handleView = () => {
-    if (id) router.push(`/products/${id}`);
+    if (id) router.push(`/vehicles/${id}`);
   };
   return (
     <Item variant={"outline"}>

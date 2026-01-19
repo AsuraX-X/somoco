@@ -17,9 +17,17 @@ import { client } from "@/sanity/lib/client";
 import { Button } from "../ui/button";
 import { AnimatePresence, motion } from "motion/react";
 
-type TypesListProps = { types: string[]; basePath?: string };
+type TypesListProps = {
+  types: string[];
+  basePath?: string;
+  onSelect?: () => void;
+};
 
-function TypesListComp({ types, basePath = "/vehicles" }: TypesListProps) {
+function TypesListComp({
+  types,
+  basePath = "/vehicles",
+  onSelect,
+}: TypesListProps) {
   const name = basePath.replace("/", "");
   const title = name.charAt(0).toUpperCase() + name.slice(1);
 
@@ -27,7 +35,11 @@ function TypesListComp({ types, basePath = "/vehicles" }: TypesListProps) {
     <ul className="grid grid-cols-2 text-white gap-2">
       <li>
         <DrawerClose asChild>
-          <Link className="text-[16px] hover:underline" href={basePath}>
+          <Link
+            className="text-[16px] hover:underline"
+            href={basePath}
+            onClick={() => onSelect?.()}
+          >
             {`All ${title}`}
           </Link>
         </DrawerClose>
@@ -38,6 +50,7 @@ function TypesListComp({ types, basePath = "/vehicles" }: TypesListProps) {
             <Link
               className="text-[16px] hover:underline"
               href={`${basePath}?type=${encodeURIComponent(t)}`}
+              onClick={() => onSelect?.()}
             >
               {t}
             </Link>
@@ -50,14 +63,8 @@ function TypesListComp({ types, basePath = "/vehicles" }: TypesListProps) {
 
 export function Menu() {
   const [types, setTypes] = React.useState<string[]>([]);
-  const [batteryTypes, setBatteryTypes] = React.useState<string[]>([
-    "Battery A",
-    "Battery B",
-  ]);
-  const [tyreTypes, setTyreTypes] = React.useState<string[]>([
-    "Tyre X",
-    "Tyre Y",
-  ]);
+  const batteryTypes = ["Coming Soon"]; // Static until batteries are implemented
+  const [tyreTypes, setTyreTypes] = React.useState<string[]>([]);
   const [view, setView] = React.useState<
     "main" | "vehicles" | "batteries" | "tyres"
   >("main");
@@ -71,6 +78,15 @@ export function Menu() {
         setTypes(t as string[]);
       })
       .catch(() => setTypes([]));
+
+    // fetch brand values from tyre documents and dedupe
+    client
+      .fetch<string[]>(`*[_type == "tyres"].brand`)
+      .then((res) => {
+        const brands = Array.from(new Set(res.filter(Boolean)));
+        setTyreTypes(brands as string[]);
+      })
+      .catch(() => setTyreTypes([]));
   }, []);
   return (
     <Drawer direction="top">
@@ -97,8 +113,8 @@ export function Menu() {
             </DrawerTitle>
           </DrawerHeader>
           <div className="flex flex-col h-full items-start sm:flex-row text-white pb-10 justify-between">
-            <div className="w-full h-full">
-              <nav className="relative h-full">
+            <div className="w-full h-full ">
+              <nav className="">
                 <AnimatePresence mode="wait">
                   {view === "main" ? (
                     <motion.ul
@@ -107,7 +123,7 @@ export function Menu() {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: 0, opacity: 0 }}
                       transition={{ duration: 0.18 }}
-                      className="absolute inset-0 flex h-full flex-col gap-4"
+                      className=" flex  flex-col gap-4"
                     >
                       <li>
                         <DrawerClose asChild>
@@ -212,7 +228,7 @@ export function Menu() {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: "-100%", opacity: 0 }}
                       transition={{ duration: 0.22 }}
-                      className="absolute inset-0 flex h-full flex-col gap-4"
+                      className="flex h-full flex-col gap-4"
                     >
                       <li>
                         <button
@@ -224,7 +240,11 @@ export function Menu() {
                         </button>
                       </li>
                       <li className="mt-2">
-                        <TypesListComp types={types} basePath="/vehicles" />
+                        <TypesListComp
+                          types={types}
+                          basePath="/vehicles"
+                          onSelect={() => setView("main")}
+                        />
                       </li>
                     </motion.ul>
                   ) : view === "batteries" ? (
@@ -234,7 +254,7 @@ export function Menu() {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: "-100%", opacity: 0 }}
                       transition={{ duration: 0.22 }}
-                      className="absolute inset-0 flex h-full flex-col gap-4"
+                      className="flex h-full flex-col gap-4"
                     >
                       <li>
                         <button
@@ -249,6 +269,7 @@ export function Menu() {
                         <TypesListComp
                           types={batteryTypes}
                           basePath="/batteries"
+                          onSelect={() => setView("main")}
                         />
                       </li>
                     </motion.ul>
@@ -259,7 +280,7 @@ export function Menu() {
                       animate={{ x: 0, opacity: 1 }}
                       exit={{ x: "-100%", opacity: 0 }}
                       transition={{ duration: 0.22 }}
-                      className="absolute inset-0 flex h-full flex-col gap-4"
+                      className="flex h-full flex-col gap-4"
                     >
                       <li>
                         <button
@@ -271,14 +292,18 @@ export function Menu() {
                         </button>
                       </li>
                       <li className="mt-2">
-                        <TypesListComp types={tyreTypes} basePath="/tyres" />
+                        <TypesListComp
+                          types={tyreTypes}
+                          basePath="/tyres"
+                          onSelect={() => setView("main")}
+                        />
                       </li>
                     </motion.ul>
                   )}
                 </AnimatePresence>
               </nav>
             </div>
-            <div className="sm:block hidden w-full">
+            <div className="sm:block hidden h-full items-center w-full">
               <Image
                 src={"/menupic.jpg"}
                 unoptimized

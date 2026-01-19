@@ -52,6 +52,23 @@ export const ALL_VEHICLES_FOR_RANDOM = `*[_type == "vehicle" && disabled != true
 // Lightweight list used for the tyres carousel. Includes brand and sizes and a single image.
 export const TYRES_FOR_CAROUSEL = `*[_type == "tyres" && disabled != true] | order(coalesce(ranking, 9999) asc, brand asc){ _id, name, brand, ranking, "image": images[0], sizes }`;
 
+// Fetch a single tyre by _id. Pass {"id": "<docId>"} as params.
+export const TYRE_BY_ID = `*[_type == "tyres" && _id == $id && disabled != true][0]{
+  _id,
+  name,
+  brand,
+  description,
+  sizes,
+  features,
+  gallery,
+  images,
+  headerImage1,
+  headerImage2
+}`;
+
+// All tyres for product listing
+export const ALL_TYRES = `*[_type == "tyres" && disabled != true] | order(coalesce(ranking, 9999) asc, brand asc, name asc){ _id, name, brand, ranking, "image": images[0], sizes }`;
+
 const queries = {
   ALL_VEHICLES,
   VEHICLE_PREVIEW_LIST,
@@ -59,6 +76,8 @@ const queries = {
   VEHICLE_BY_SLUG,
   VEHICLES_FOR_CAROUSEL,
   TYRES_FOR_CAROUSEL,
+  TYRE_BY_ID,
+  ALL_TYRES,
   LATEST_3_VEHICLES,
 };
 
