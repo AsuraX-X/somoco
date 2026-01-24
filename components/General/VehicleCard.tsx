@@ -37,7 +37,7 @@ export default function VehicleCard({
     <Item variant={"outline"}>
       <ItemHeader className="relative">
         <Image
-          src={"/inner-bg.png"}
+          src={"/ui/inner-bg.png"}
           alt={"background"}
           width={128}
           height={128}

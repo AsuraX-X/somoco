@@ -69,7 +69,7 @@ export function Menu() {
     <Drawer direction="top">
       <DrawerTrigger asChild>
         <Button>
-          <Image src={"/menu.png"} alt="menu icon" width={30} height={30} />
+          <Image src={"/ui/menu.png"} alt="menu icon" width={30} height={30} />
         </Button>
       </DrawerTrigger>
       <DrawerContent className="bg-primary rounded-none! px-4 sm:px-20">
@@ -222,7 +222,7 @@ export function Menu() {
             </div>
             <div className="sm:block hidden h-full items-center w-full">
               <Image
-                src={"/menupic.jpg"}
+                src={"/ui/menupic.jpg"}
                 unoptimized
                 alt="warranty"
                 width={0}
