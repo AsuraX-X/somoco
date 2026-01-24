@@ -72,7 +72,8 @@ const Looking = () => {
               </h2>
               <p>
                 We have a wide portfolio of parts and accessories for your
-                biking needs. Call 054 011 2783 today! CONTACT US
+                biking needs. Call <a className=" underline" href="tel:+2330540112783">054 011 2783</a>{" "}
+                today!
               </p>
             </div>
           </div>
