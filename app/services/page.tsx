@@ -21,7 +21,7 @@ const ServicesPage = () => {
     <div>
       <div className="w-full max-h-[430px] relative h-full">
         <Image
-          src={"/service-banner.png"}
+          src={"/banners/service-banner.png"}
           alt="service banner"
           width={430}
           height={0}
@@ -62,7 +62,7 @@ const ServicesPage = () => {
         <div className="flex  order-1 md:order-2 gap-8">
           <div className="w-full">
             <Image
-              src={"/service-1.png"}
+              src={"/services/service-1.png"}
               width={0}
               height={0}
               alt="service image"

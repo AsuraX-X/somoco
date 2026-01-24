@@ -17,7 +17,7 @@ const Home = () => {
       <Why />
       <section className="items-center justify-center w-full">
         <Image
-          src={"/banner.png"}
+          src={"/banners/banner.png"}
           width={0}
           height={0}
           alt="Somoco Ghana Limited"

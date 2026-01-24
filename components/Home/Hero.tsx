@@ -13,7 +13,13 @@ import { useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Hero = () => {
-  const banners = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg"];
+  const banners = [
+    "/banners/1.jpg",
+    "/banners/2.jpg",
+    "/banners/3.jpg",
+    "/banners/4.jpg",
+    "/banners/5.jpg",
+  ];
   const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
 
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }));

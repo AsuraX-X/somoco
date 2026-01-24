@@ -15,7 +15,7 @@ export default async function Blogs() {
     <div className="">
       <div className="w-full max-h-[430px] relative h-full">
         <Image
-          src={"/blogs-banner.png"}
+          src={"/banners/blogs-banner.png"}
           alt="blog banner"
           width={430}
           height={0}

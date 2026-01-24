@@ -8,7 +8,7 @@ const ContactUs = () => {
     <div>
       <div className="w-full max-h-[430px] relative h-full">
         <Image
-          src={"/contact-banner.png"}
+          src={"/banners/contact-banner.png"}
           alt="about us banner"
           width={430}
           height={0}

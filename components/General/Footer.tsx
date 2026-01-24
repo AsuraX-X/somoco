@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="space-y-4 md:col-span-2">
             <div className="flex items-center gap-3">
               <Image
-                src="/w-logo.png"
+                src="/ui/w-logo.png"
                 alt="Somoco Ghana Limited"
                 width={140}
                 height={48}
@@ -130,7 +130,7 @@ export default function Footer() {
                     className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
                   >
                     <Image
-                      src={"/x.svg"}
+                      src={"/ui/x.svg"}
                       width={16}
                       height={16}
                       alt="x logo"

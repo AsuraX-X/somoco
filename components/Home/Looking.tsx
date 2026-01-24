@@ -10,7 +10,7 @@ const Looking = () => {
         <div className="flex gap-4 flex-col flex-1">
           <div className="h-full w-full relative ">
             <Image
-              src="/eco-1.png"
+              src="/economy/eco-1.png"
               alt="motor rider"
               fill
               unoptimized
@@ -19,7 +19,7 @@ const Looking = () => {
           </div>
           <div>
             <Image
-              src="/eco-2.png"
+              src="/economy/eco-2.jpg"
               alt="motor rider"
               height={375}
               width={0}
@@ -49,7 +49,7 @@ const Looking = () => {
             <div className="flex h-full gap-6">
               <div className="w-2/3 relative h-full">
                 <Image
-                  src="/eco-3.png"
+                  src="/economy/eco-3.png"
                   alt="motor rider"
                   fill
                   unoptimized
@@ -58,7 +58,7 @@ const Looking = () => {
               </div>
               <div className="w-1/3 relative h-full">
                 <Image
-                  src="/eco-4.png"
+                  src="/economy/eco-4.png"
                   alt="motor rider"
                   fill
                   unoptimized
@@ -81,7 +81,7 @@ const Looking = () => {
       <div className="md:hidden flex flex-col">
         <div>
           <Image
-            src="/eco-1.png"
+            src="/economy/eco-1.png"
             width={0}
             height={0}
             alt="motor rider"
@@ -103,7 +103,7 @@ const Looking = () => {
           <div className="flex h-80 gap-4 mt-8">
             <div className="w-2/3 relative h-full">
               <Image
-                src="/eco-3.png"
+                src="/economy/eco-3.png"
                 alt="motor rider"
                 fill
                 unoptimized
@@ -112,7 +112,7 @@ const Looking = () => {
             </div>
             <div className="w-1/3 relative h-full">
               <Image
-                src="/eco-4.png"
+                src="/economy/eco-4.png"
                 alt="motor rider"
                 fill
                 unoptimized

@@ -5,7 +5,7 @@ const TyresPage = () => {
   return (
     <ReusableProductsPage
       title="Tyres"
-      bannerImage="/products-banner.jpg"
+      bannerImage="/banners/products-banner.jpg"
       bannerAlt="tyres banner"
       contentType="tyres"
       filterField="brand"

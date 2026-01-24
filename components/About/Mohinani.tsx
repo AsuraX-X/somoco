@@ -53,7 +53,7 @@ const Mohinani = () => {
 
       <div className="w-full max-h-[340px] h-full mt-6">
         <Image
-          src={"/how-to-2.png"}
+          src={"/about/how-to-2.png"}
           alt="about us banner"
           width={0}
           height={0}
@@ -104,7 +104,7 @@ const Mohinani = () => {
         </div>
         <div className="w-full p-4 min-w-[410px] h-full">
           <Image
-            src={"/goals.png"}
+            src={"/about/goals.png"}
             alt="about us banner"
             width={0}
             height={0}
@@ -151,7 +151,7 @@ const Mohinani = () => {
       <div>
         <div className="grid gap-6 pt-4 grid-cols-3">
           <Image
-            src={"/about-2.png"}
+            src={"/about/about-2.png"}
             alt="about us banner"
             width={0}
             height={0}
@@ -159,7 +159,7 @@ const Mohinani = () => {
             className="h-full  aspect-square object-cover object-center rounded-lg w-full"
           />
           <Image
-            src={"/about-3.png"}
+            src={"/about/about-3.png"}
             alt="about us banner"
             width={0}
             height={0}
@@ -167,7 +167,7 @@ const Mohinani = () => {
             className="h-full  aspect-square object-cover object-center rounded-lg w-full"
           />
           <Image
-            src={"/about-4.png"}
+            src={"/about/about-4.png"}
             alt="about us banner"
             width={0}
             height={0}

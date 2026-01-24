@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { X, ChevronRight, ChevronLeft } from "lucide-react";
+import { X, ChevronRight } from "lucide-react";
 
 import {
   Drawer,
@@ -77,7 +77,7 @@ export function Menu() {
           <DrawerHeader>
             <DrawerTitle className=" flex items-center justify-between">
               <Image
-                src="/w-logo.png"
+                src="/ui/w-logo.png"
                 alt="Somoco Logo"
                 width={200}
                 height={26}
