@@ -17,6 +17,7 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import BackButton from "@/components/General/BackButton";
+import QuoteRequestButton from "@/components/General/QuoteRequestButton";
 
 type Props = {
   params: { id: string };
@@ -116,7 +117,7 @@ export default async function VehiclePage({ params }: Props) {
     const imagesToShow: ImgType[] =
       vehicle.images && vehicle.images.length
         ? vehicle.images
-        : vehicle.gallery?.map((g) => g.image) ?? [];
+        : (vehicle.gallery?.map((g) => g.image) ?? []);
 
     return (
       <div>
@@ -159,6 +160,12 @@ export default async function VehiclePage({ params }: Props) {
                 <p className="text-2xl">{vehicle.engine ?? "—"}</p>
               </div>
             </div>
+
+            <QuoteRequestButton
+              productName={vehicle.name || "Vehicle"}
+              productType="vehicle"
+              className="mt-6"
+            />
           </div>
           <div>
             {(vehicle.images?.length || vehicle.gallery?.length) && (
@@ -169,7 +176,7 @@ export default async function VehiclePage({ params }: Props) {
                       <CarouselItem key={idx}>
                         {img ? (
                           <div className="rounded">
-                            <div className="relative w-full h-[280px] sm:h-[360px] md:h-[450px]">
+                            <div className="relative w-full h-70 sm:h-90 md:h-112.5">
                               <Image
                                 src={urlFor(img).url()}
                                 alt={vehicle.name ?? "vehicle image"}
@@ -274,7 +281,7 @@ export default async function VehiclePage({ params }: Props) {
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                    )
+                    ),
                   )}
                 </Accordion>
               </div>

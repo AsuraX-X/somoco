@@ -11,6 +11,7 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import BackButton from "@/components/General/BackButton";
+import QuoteRequestButton from "@/components/General/QuoteRequestButton";
 
 type Props = {
   params: { id: string };
@@ -129,7 +130,7 @@ export default async function TyrePage({ params }: Props) {
                 <div>
                   <h4 className="text-sm font-medium">Available Sizes</h4>
                   <div className="mt-2">
-                    <ul className="flex flex-col gap-1 text-sm">
+                    <ul className="grid grid-cols-2 gap-4 text-sm">
                       {tyre.sizes.map((size) => (
                         <li key={size} className="leading-tight text-lg">
                           {size}
@@ -140,6 +141,12 @@ export default async function TyrePage({ params }: Props) {
                 </div>
               )}
             </div>
+
+            <QuoteRequestButton
+              productName={tyre.name || tyre.brand || "Tyre"}
+              productType="tyre"
+              className="mt-6"
+            />
           </div>
           <div>
             {(tyre.images?.length || tyre.gallery?.length) && (
@@ -164,8 +171,12 @@ export default async function TyrePage({ params }: Props) {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious className="sm:absolute flex top-1/2 ml-4 sm:ml-0 sm:left-4 scale-125 cursor-pointer" />
-                  <CarouselNext className="sm:absolute flex top-1/2 mr-4 sm:mr-0 sm:right-4 scale-125 cursor-pointer" />
+                  {imagesToShow.length > 1 && (
+                    <>
+                      <CarouselPrevious className="sm:absolute flex top-1/2 ml-4 sm:ml-0 sm:left-4 scale-125 cursor-pointer" />
+                      <CarouselNext className="sm:absolute flex top-1/2 mr-4 sm:mr-0 sm:right-4 scale-125 cursor-pointer" />
+                    </>
+                  )}
                 </Carousel>
               </section>
             )}

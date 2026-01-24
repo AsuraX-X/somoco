@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/General/Header";
 import Footer from "@/components/General/Footer";
 import StudioGuard from "@/components/General/StudioGuard";
+import { QuoteRequestProvider } from "@/components/General/QuoteRequestContext";
+import QuoteRequestOverlay from "@/components/General/QuoteRequestOverlay";
 
 const ceraPro = localFont({
   src: [
@@ -50,9 +52,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ceraPro.variable} ${ceraStencil.variable}`}>
       <body className={`${ceraPro.className} mt-14 antialiased`}>
-        <StudioGuard header={<Header />} footer={<Footer />}>
-          {children}
-        </StudioGuard>
+        <QuoteRequestProvider>
+          <StudioGuard header={<Header />} footer={<Footer />}>
+            {children}
+          </StudioGuard>
+          <QuoteRequestOverlay />
+        </QuoteRequestProvider>
       </body>
     </html>
   );

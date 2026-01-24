@@ -29,7 +29,7 @@ export default function TyreCard({ name, brand, image, sizes, id }: Props) {
 
   const sizesList =
     sizes && sizes.length ? (
-      <span className="flex flex-col gap-1 text-sm">
+      <span className="grid grid-cols-2 text-sm">
         {sizes.map((s) => (
           <span key={s} className="leading-tight">
             {s}
@@ -41,8 +41,8 @@ export default function TyreCard({ name, brand, image, sizes, id }: Props) {
     );
 
   return (
-    <Item variant={"outline"}>
-      <ItemHeader className="relative">
+    <Item className="h-full flex-col! items-stretch!" variant={"outline"}>
+      <div className="relative shrink-0 w-full">
         {image ? (
           <Image
             src={image}
@@ -55,11 +55,13 @@ export default function TyreCard({ name, brand, image, sizes, id }: Props) {
         ) : (
           <div className="aspect-square z-10 w-full rounded-sm bg-muted-foreground/10" />
         )}
-      </ItemHeader>
-      <div className="flex flex-col  w-full">
-        <ItemContent>
-          <ItemTitle>{name ?? brand}</ItemTitle>
-          <ItemDescription className="flex items-center w-full gap-2 ">
+      </div>
+      <div className="flex flex-1 flex-col w-full">
+        <ItemContent className="">
+          <ItemTitle>
+            {brand} {name ? name : ""}
+          </ItemTitle>
+          <ItemDescription className="flex items-start w-full gap-2">
             <span className="bg-black/5 size-10 rounded-full aspect-square flex items-center justify-center">
               <Image src={"/tyre.svg"} width={25} height={25} alt="tyre" />
             </span>
@@ -69,12 +71,12 @@ export default function TyreCard({ name, brand, image, sizes, id }: Props) {
             </span>
           </ItemDescription>
         </ItemContent>
-        <ItemActions className="flex gap-4">
-          <Button className="mt-4 flex-1" onClick={handleView}>
+        <ItemActions className="flex gap-4 mt-auto pt-4">
+          <Button className="flex-1" onClick={handleView}>
             View Details
           </Button>
           <Button
-            className="flex-1 mt-4"
+            className="flex-1"
             onClick={() => {
               if (id) router.push(`/compare?v1=${encodeURIComponent(id)}`);
             }}

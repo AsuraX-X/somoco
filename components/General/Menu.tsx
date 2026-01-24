@@ -17,49 +17,9 @@ import { client } from "@/sanity/lib/client";
 import { Button } from "../ui/button";
 import { AnimatePresence, motion } from "motion/react";
 
-type TypesListProps = {
-  types: string[];
-  basePath?: string;
-  onSelect?: () => void;
-};
-
-function TypesListComp({
-  types,
-  basePath = "/vehicles",
-  onSelect,
-}: TypesListProps) {
-  const name = basePath.replace("/", "");
-  const title = name.charAt(0).toUpperCase() + name.slice(1);
-
-  return (
-    <ul className="grid grid-cols-2 text-white gap-2">
-      <li>
-        <DrawerClose asChild>
-          <Link
-            className="text-[16px] hover:underline"
-            href={basePath}
-            onClick={() => onSelect?.()}
-          >
-            {`All ${title}`}
-          </Link>
-        </DrawerClose>
-      </li>
-      {types.map((t) => (
-        <li key={t}>
-          <DrawerClose asChild>
-            <Link
-              className="text-[16px] hover:underline"
-              href={`${basePath}?type=${encodeURIComponent(t)}`}
-              onClick={() => onSelect?.()}
-            >
-              {t}
-            </Link>
-          </DrawerClose>
-        </li>
-      ))}
-    </ul>
-  );
-}
+import VehiclesMenu from "./VehiclesMenu";
+import BatteriesMenu from "./BatteriesMenu";
+import TyresMenu from "./TyresMenu";
 
 export function Menu() {
   const [types, setTypes] = React.useState<string[]>([]);
@@ -79,12 +39,29 @@ export function Menu() {
       })
       .catch(() => setTypes([]));
 
-    // fetch brand values from tyre documents and dedupe
+    // fetch brand values and rankings from tyre documents, then sort brands by their best (lowest) ranking
     client
-      .fetch<string[]>(`*[_type == "tyres"].brand`)
+      .fetch<{ brand?: string; ranking?: number }[]>(
+        `*[_type == "tyres" && !disabled]{brand, ranking}`,
+      )
       .then((res) => {
-        const brands = Array.from(new Set(res.filter(Boolean)));
-        setTyreTypes(brands as string[]);
+        // Build a map of brand -> best (lowest) ranking found
+        const brandBest = new Map<string, number>();
+        res.forEach((t) => {
+          if (!t?.brand) return;
+          const r = typeof t.ranking === "number" ? t.ranking : Infinity;
+          const prev = brandBest.get(t.brand);
+          if (prev === undefined || r < prev) brandBest.set(t.brand, r);
+        });
+
+        const sorted = Array.from(brandBest.entries())
+          .sort((a, b) => {
+            if (a[1] === b[1]) return a[0].localeCompare(b[0]);
+            return a[1] - b[1]; // lower ranking first
+          })
+          .map(([brand]) => brand);
+
+        setTyreTypes(sorted as string[]);
       })
       .catch(() => setTyreTypes([]));
   }, []);
@@ -160,20 +137,20 @@ export function Menu() {
 
                       <li>
                         <button
-                          onClick={() => setView("batteries")}
+                          onClick={() => setView("tyres")}
                           className="flex items-center w-full"
                         >
-                          <span>Batteries</span>
+                          <span>Tyres</span>
                           <ChevronRight size={18} />
                         </button>
                       </li>
 
                       <li>
                         <button
-                          onClick={() => setView("tyres")}
+                          onClick={() => setView("batteries")}
                           className="flex items-center w-full"
                         >
-                          <span>Tyres</span>
+                          <span>Batteries</span>
                           <ChevronRight size={18} />
                         </button>
                       </li>
@@ -222,83 +199,23 @@ export function Menu() {
                       </li>
                     </motion.ul>
                   ) : view === "vehicles" ? (
-                    <motion.ul
-                      key="vehicles"
-                      initial={{ x: "-100%", opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      exit={{ x: "-100%", opacity: 0 }}
-                      transition={{ duration: 0.22 }}
-                      className="flex h-full flex-col gap-4"
-                    >
-                      <li>
-                        <button
-                          onClick={() => setView("main")}
-                          className="flex items-center gap-2"
-                        >
-                          <ChevronLeft size={18} />
-                          <span>Back</span>
-                        </button>
-                      </li>
-                      <li className="mt-2">
-                        <TypesListComp
-                          types={types}
-                          basePath="/vehicles"
-                          onSelect={() => setView("main")}
-                        />
-                      </li>
-                    </motion.ul>
+                    <VehiclesMenu
+                      types={types}
+                      onBack={() => setView("main")}
+                      onSelect={() => setView("main")}
+                    />
                   ) : view === "batteries" ? (
-                    <motion.ul
-                      key="batteries"
-                      initial={{ x: "-100%", opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      exit={{ x: "-100%", opacity: 0 }}
-                      transition={{ duration: 0.22 }}
-                      className="flex h-full flex-col gap-4"
-                    >
-                      <li>
-                        <button
-                          onClick={() => setView("main")}
-                          className="flex items-center gap-2"
-                        >
-                          <ChevronLeft size={18} />
-                          <span>Back</span>
-                        </button>
-                      </li>
-                      <li className="mt-2">
-                        <TypesListComp
-                          types={batteryTypes}
-                          basePath="/batteries"
-                          onSelect={() => setView("main")}
-                        />
-                      </li>
-                    </motion.ul>
+                    <BatteriesMenu
+                      types={batteryTypes}
+                      onBack={() => setView("main")}
+                      onSelect={() => setView("main")}
+                    />
                   ) : (
-                    <motion.ul
-                      key="tyres"
-                      initial={{ x: "-100%", opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      exit={{ x: "-100%", opacity: 0 }}
-                      transition={{ duration: 0.22 }}
-                      className="flex h-full flex-col gap-4"
-                    >
-                      <li>
-                        <button
-                          onClick={() => setView("main")}
-                          className="flex items-center gap-2"
-                        >
-                          <ChevronLeft size={18} />
-                          <span>Back</span>
-                        </button>
-                      </li>
-                      <li className="mt-2">
-                        <TypesListComp
-                          types={tyreTypes}
-                          basePath="/tyres"
-                          onSelect={() => setView("main")}
-                        />
-                      </li>
-                    </motion.ul>
+                    <TyresMenu
+                      types={tyreTypes}
+                      onBack={() => setView("main")}
+                      onSelect={() => setView("main")}
+                    />
                   )}
                 </AnimatePresence>
               </nav>

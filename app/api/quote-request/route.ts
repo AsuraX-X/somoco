@@ -5,12 +5,13 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    console.log("Contact submission received:", body);
+    console.log("Quote request submission received:", body);
 
     const submittedAt = formatSubmittedAt(body.submittedAt);
+
     const html = `
       <div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,\"Helvetica Neue\",Arial;line-height:1.4;color:#111">
-        <h2>New contact message</h2>
+        <h2>New quote request</h2>
         <p><strong>Submitted at:</strong> ${submittedAt}</p>
         <table cellpadding="4" style="border-collapse:collapse">
           <tr><td><strong>Name</strong></td><td>${escapeHtml(
@@ -21,6 +22,12 @@ export async function POST(request: Request) {
           )}</td></tr>
           <tr><td><strong>Phone</strong></td><td>${escapeHtml(
             body.phone,
+          )}</td></tr>
+          <tr><td><strong>Product</strong></td><td>${escapeHtml(
+            body.product,
+          )}</td></tr>
+          <tr><td><strong>Product Type</strong></td><td>${escapeHtml(
+            body.productType,
           )}</td></tr>
           <tr><td><strong>City</strong></td><td>${escapeHtml(
             body.city,
@@ -33,12 +40,12 @@ export async function POST(request: Request) {
         <div style="white-space:pre-wrap;background:#f7f7f8;padding:12px;border-radius:6px">${escapeHtml(
           body.message || "",
         )}</div>
-        <p style="color:#666;font-size:13px;margin-top:12px">This message was generated from the site contact form.</p>
+        <p style="color:#666;font-size:13px;margin-top:12px">This message was generated from the quote request form.</p>
       </div>
     `;
 
     const result = await sendEmail({
-      subject: `Contact message from ${body.name || "Website"}`,
+      subject: `Quote request for ${body.product || body.productType} from ${body.name || "Website"}`,
       html,
       replyTo: body.email,
     });
@@ -47,7 +54,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, result });
   } catch (err) {
-    console.error("Error handling contact submission", err);
+    console.error("Error handling quote request submission", err);
     const errorMessage = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
       { ok: false, error: errorMessage },
