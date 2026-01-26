@@ -14,9 +14,9 @@ const SpareParts = () => {
 
   return (
     <div>
-      <div className="w-full max-h-[430px] relative h-full">
+      <div className="w-full max-h-107.5 relative h-full">
         <Image
-          src={"/service-banner.png"}
+          src={"/banners/service-banner.png"}
           alt="service banner"
           width={430}
           height={0}
@@ -27,7 +27,7 @@ const SpareParts = () => {
           Spare Parts
         </h1>
       </div>
-      <div className="grid md:max-h-[650px] md:grid-cols-2 gap-4 my-10 px-4 sm:px-20 grid-cols-1">
+      <div className="grid md:max-h-162.5 md:grid-cols-2 gap-4 my-10 px-4 sm:px-20 grid-cols-1">
         <div className="h-full  order-2 md:order-1 flex flex-col justify-center ">
           <div className="space-y-2">
             <h1 className="text-4xl font-extrabold">SOMOCO SPARE PARTS</h1>
@@ -53,7 +53,7 @@ const SpareParts = () => {
         <div className="flex  order-1 md:order-2 gap-8">
           <div className="w-full">
             <Image
-              src={"/service-1.png"}
+              src={"/services/service-1.png"}
               width={0}
               height={0}
               alt="service image"
