@@ -63,7 +63,7 @@ export default function TyreCard({ name, brand, image, sizes, id }: Props) {
           </ItemTitle>
           <ItemDescription className="flex items-start w-full gap-2">
             <span className="bg-black/5 size-10 rounded-full aspect-square flex items-center justify-center">
-              <Image src={"/tyre.svg"} width={25} height={25} alt="tyre" />
+              <Image src={"/ui/tyre.svg"} width={25} height={25} alt="tyre" />
             </span>
             <span className="text-wrap">
               <span className="text-sm font-medium">Available sizes:</span>

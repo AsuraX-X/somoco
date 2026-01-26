@@ -62,7 +62,7 @@ export default function VehicleCard({
           <ItemTitle>{name}</ItemTitle>
           <ItemDescription className="flex items-center w-full gap-2 ">
             <span className="bg-black/5 size-10 rounded-full aspect-square flex items-center justify-center">
-              <Image src={"/engine.svg"} width={30} height={30} alt="engine" />
+              <Image src={"/ui/engine.svg"} width={30} height={30} alt="engine" />
             </span>
             <span className=" text-wrap">{engine}</span>
           </ItemDescription>

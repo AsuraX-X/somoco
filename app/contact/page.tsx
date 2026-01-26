@@ -6,7 +6,7 @@ import Locations from "@/components/Contact/Locations";
 const ContactUs = () => {
   return (
     <div>
-      <div className="w-full max-h-[430px] relative h-full">
+      <div className="w-full max-h-107.5 relative h-full">
         <Image
           src={"/banners/contact-banner.png"}
           alt="about us banner"
