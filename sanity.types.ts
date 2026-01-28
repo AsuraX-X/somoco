@@ -13,6 +13,26 @@
  */
 
 // Source: schema.json
+export type Dealer = {
+  _id: string;
+  _type: "dealer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  type?:
+    | "partner_dealer"
+    | "spares_dealer"
+    | "service_partner"
+    | "warranty_touchpoint";
+  region?: string;
+  city?: string;
+  address?: string;
+  contactNumber?: string;
+  email?: string;
+  disabled?: boolean;
+};
+
 export type Tyres = {
   _id: string;
   _type: "tyres";
@@ -367,6 +387,7 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | Dealer
   | Tyres
   | SanityImageCrop
   | SanityImageHotspot

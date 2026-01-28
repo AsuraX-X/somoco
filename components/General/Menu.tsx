@@ -165,6 +165,7 @@ export function Menu() {
                           </Link>
                         </DrawerClose>
                       </li>
+
                       <li>
                         <DrawerClose asChild>
                           <Link
@@ -172,6 +173,16 @@ export function Menu() {
                             href="/spare-parts"
                           >
                             Spare Parts
+                          </Link>
+                        </DrawerClose>
+                      </li>
+                      <li>
+                        <DrawerClose asChild>
+                          <Link
+                            className="text-[16px] hover:underline"
+                            href="/where-to-buy"
+                          >
+                            Where To Buy
                           </Link>
                         </DrawerClose>
                       </li>

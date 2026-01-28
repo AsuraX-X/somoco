@@ -61,7 +61,7 @@ const SpareParts = () => {
               className="w-full h-full rounded-lg object-cover"
             />
           </div>
-          <div className="w-full capitalize flex items-center justify-center bg-primary text-white rounded-lg max-w-[115px]">
+          <div className="w-full capitalize flex items-center justify-center bg-primary text-white rounded-lg max-w-28.75">
             <p className="sm:text-3xl text-2xl rotate-90 text-nowrap ">
               Genuine spare parts
             </p>

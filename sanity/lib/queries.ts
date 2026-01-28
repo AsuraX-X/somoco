@@ -69,6 +69,18 @@ export const TYRE_BY_ID = `*[_type == "tyres" && _id == $id && disabled != true]
 // All tyres for product listing
 export const ALL_TYRES = `*[_type == "tyres" && disabled != true] | order(coalesce(ranking, 9999) asc, brand asc, name asc){ _id, name, brand, ranking, "image": images[0], sizes }`;
 
+// All dealers grouped by type
+export const ALL_DEALERS = `*[_type == "dealer" && disabled != true] | order(region asc, city asc, name asc){ _id, name, type, region, city, address, contactNumber, email }`;
+
+// Get unique regions from dealers
+export const DEALER_REGIONS = `array::unique(*[_type == "dealer" && disabled != true].region) | order(@)`;
+
+// Get cities for a specific region. Pass {"region": "regionName"} as params.
+export const DEALER_CITIES_BY_REGION = `array::unique(*[_type == "dealer" && _region == $region && disabled != true].city) | order(@)`;
+
+// Get dealers filtered by region and city. Pass {"region": "regionName", "city": "cityName"} as params.
+export const DEALERS_BY_LOCATION = `*[_type == "dealer" && region == $region && city == $city && disabled != true] | order(type asc, name asc){ _id, name, type, region, city, address, contactNumber, email }`;
+
 const queries = {
   ALL_VEHICLES,
   VEHICLE_PREVIEW_LIST,
@@ -79,6 +91,10 @@ const queries = {
   TYRE_BY_ID,
   ALL_TYRES,
   LATEST_3_VEHICLES,
+  ALL_DEALERS,
+  DEALER_REGIONS,
+  DEALER_CITIES_BY_REGION,
+  DEALERS_BY_LOCATION,
 };
 
 export default queries;
