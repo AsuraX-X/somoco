@@ -43,7 +43,7 @@ const Hero = () => {
               <Card className="rounded-none p-0">
                 <CardContent className="flex h-fit items-center justify-center p-0">
                   {!imagesLoaded[banner] && (
-                    <Skeleton className="min-w-screen h-[400px] sm:h-[500px] lg:h-[600px]" />
+                    <Skeleton className="min-w-screen h-100 sm:h-125 lg:h-150" />
                   )}
                   <Image
                     src={banner}
