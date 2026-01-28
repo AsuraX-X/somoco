@@ -42,8 +42,8 @@ export default function WhereToBuyPage() {
       new Set(
         dealers
           .map((d) => d.region)
-          .filter((r): r is string => typeof r === "string" && r.trim() !== "")
-      )
+          .filter((r): r is string => typeof r === "string" && r.trim() !== ""),
+      ),
     );
     return uniqueRegions.sort();
   }, [dealers]);
@@ -161,7 +161,8 @@ export default function WhereToBuyPage() {
         </div>
 
         {/* Clear Filters */}
-        {((selectedRegion && selectedRegion !== "all") || (selectedCity && selectedCity !== "all")) && (
+        {((selectedRegion && selectedRegion !== "all") ||
+          (selectedCity && selectedCity !== "all")) && (
           <button
             onClick={() => {
               setSelectedRegion("");
