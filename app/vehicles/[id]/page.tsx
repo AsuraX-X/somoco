@@ -103,10 +103,10 @@ export default async function VehiclePage({ params }: Props) {
   // Extracted small renderer so we can return early from the try/catch branches above
   function renderVehicle(vehicle: Vehicle) {
     const header1 = vehicle.headerImage1
-      ? urlFor(vehicle.headerImage1).width(1600).height(600).url()
+      ? urlFor(vehicle.headerImage1).auto("format").url()
       : undefined;
     const header2 = vehicle.headerImage2
-      ? urlFor(vehicle.headerImage2).width(1200).height(400).url()
+      ? urlFor(vehicle.headerImage2).auto("format").url()
       : undefined;
 
     const description = plainTextFromBlocks(vehicle.description);
@@ -206,7 +206,7 @@ export default async function VehiclePage({ params }: Props) {
               width={0}
               height={0}
               unoptimized
-              className="w-full h-full object-contain"
+              className="w-full h-full rounded-sm object-contain"
             />
           </div>
         )}

@@ -80,10 +80,10 @@ export default async function TyrePage({ params }: Props) {
   // Extracted small renderer so we can return early from the try/catch branches above
   function renderTyre(tyre: Tyres) {
     const header1 = tyre.headerImage1
-      ? urlFor(tyre.headerImage1).width(1600).height(600).url()
+      ? urlFor(tyre.headerImage1).auto("format").url()
       : undefined;
     const header2 = tyre.headerImage2
-      ? urlFor(tyre.headerImage2).width(1200).height(400).url()
+      ? urlFor(tyre.headerImage2).auto("format").url()
       : undefined;
 
     const description = plainTextFromBlocks(tyre.description);
@@ -191,7 +191,7 @@ export default async function TyrePage({ params }: Props) {
               width={0}
               height={0}
               unoptimized
-              className="w-full h-full object-contain"
+              className="w-full rounded-sm h-full object-contain"
             />
           </div>
         )}
