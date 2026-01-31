@@ -10,11 +10,11 @@ const Looking = () => {
         <div className="flex gap-4 flex-col flex-1">
           <div className="h-full w-full relative ">
             <Image
-              src="/economy/eco-1.png"
+              src="/economy/eco-1.jpg"
               alt="motor rider"
               fill
               unoptimized
-              className="object-cover"
+              className="object-cover rotate-y-180"
             />
           </div>
           <div>
@@ -72,7 +72,10 @@ const Looking = () => {
               </h2>
               <p>
                 We have a wide portfolio of parts and accessories for your
-                biking needs. Call <a className=" underline" href="tel:+2330540112783">054 011 2783</a>{" "}
+                biking needs. Call{" "}
+                <a className=" underline" href="tel:+2330540112783">
+                  054 011 2783
+                </a>{" "}
                 today!
               </p>
             </div>
