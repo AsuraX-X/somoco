@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { client } from "@/sanity/lib/client";
 import { ALL_DEALERS } from "@/sanity/lib/queries";
-import type { Dealer } from "@/sanity.types";
+import type { Dealer, ServicePartner } from "@/sanity.types";
 import { DealerSection } from "@/components/WhereToBuy/DealerSection";
 import {
   Select,
@@ -16,16 +16,17 @@ import { Label } from "@/components/ui/label";
 import { Store, Wrench, Shield, Package } from "lucide-react";
 
 export default function WhereToBuyPage() {
-  const [dealers, setDealers] = useState<Dealer[]>([]);
+  const [dealers, setDealers] = useState<(Dealer | ServicePartner)[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState<string>("");
-  const [selectedCity, setSelectedCity] = useState<string>("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
 
-  // Fetch all dealers on mount
+  // Fetch all dealers and service partners on mount
   useEffect(() => {
     async function fetchDealers() {
       try {
-        const data = await client.fetch<Dealer[]>(ALL_DEALERS);
+        const data =
+          await client.fetch<(Dealer | ServicePartner)[]>(ALL_DEALERS);
         setDealers(data);
       } catch (error) {
         console.error("Error fetching dealers:", error);
@@ -36,46 +37,53 @@ export default function WhereToBuyPage() {
     fetchDealers();
   }, []);
 
-  // Get unique regions (filter out undefined)
+  // Get unique regions (flatten arrays and filter out undefined)
   const regions = useMemo(() => {
+    const allRegions = dealers.flatMap((d) => d.regions || []);
     const uniqueRegions = Array.from(
       new Set(
-        dealers
-          .map((d) => d.region)
-          .filter((r): r is string => typeof r === "string" && r.trim() !== ""),
+        allRegions.filter((r) => typeof r === "string" && r.trim() !== ""),
       ),
     );
     return uniqueRegions.sort();
   }, [dealers]);
 
-  // Get cities for selected region (filter out undefined)
-  const cities = useMemo(() => {
-    if (!selectedRegion || selectedRegion === "all") return [];
-    const regionCities = dealers
-      .filter((d) => d.region === selectedRegion)
-      .map((d) => d.city)
-      .filter((c): c is string => typeof c === "string" && c.trim() !== "");
-    return Array.from(new Set(regionCities)).sort();
+  // Get locations for selected region (flatten arrays and filter)
+  const locations = useMemo(() => {
+    if (!selectedRegion) return [];
+    const regionDealers = dealers.filter((d) =>
+      d.regions?.includes(selectedRegion),
+    );
+    const allLocations = regionDealers.flatMap((d) => d.towns || []);
+    return Array.from(
+      new Set(
+        allLocations.filter((t) => typeof t === "string" && t.trim() !== ""),
+      ),
+    ).sort();
   }, [dealers, selectedRegion]);
 
-  // Filter dealers by location ("all" means no filter)
+  // Filter dealers by location - only show dealers if a region is selected
   const filteredDealers = useMemo(() => {
-    let filtered = dealers;
-
-    if (selectedRegion && selectedRegion !== "all") {
-      filtered = filtered.filter((d) => d.region === selectedRegion);
+    // Don't show any dealers if no region is selected
+    if (!selectedRegion) {
+      return [];
     }
 
-    if (selectedCity && selectedCity !== "all") {
-      filtered = filtered.filter((d) => d.city === selectedCity);
+    let filtered = dealers.filter((d) => d.regions?.includes(selectedRegion));
+
+    if (selectedLocation && selectedLocation !== "all") {
+      filtered = filtered.filter((d) => d.towns?.includes(selectedLocation));
     }
 
     return filtered;
-  }, [dealers, selectedRegion, selectedCity]);
+  }, [dealers, selectedRegion, selectedLocation]);
 
   // Group dealers by type
   const partnerDealers = filteredDealers.filter(
     (d) => d.type === "partner_dealer",
+  );
+  const tyresBatteriesDealers = filteredDealers.filter(
+    (d) => d.type === "tyres_batteries_dealer",
   );
   const sparesDealers = filteredDealers.filter(
     (d) => d.type === "spares_dealer",
@@ -87,21 +95,21 @@ export default function WhereToBuyPage() {
     (d) => d.type === "warranty_touchpoint",
   );
 
-  // Reset city when region changes
+  // Reset location when region changes
   useEffect(() => {
-    setSelectedCity("");
+    setSelectedLocation("");
   }, [selectedRegion]);
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-12">
+      <div className="container h-screen mx-auto px-4 py-12">
         <div className="text-center">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container min-h-screen mx-auto px-4 py-6">
       {/* Header */}
       <div className="mb-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Where to Buy</h1>
@@ -125,7 +133,6 @@ export default function WhereToBuyPage() {
                 <SelectValue placeholder="Select a region" />
               </SelectTrigger>
               <SelectContent className="bg-background">
-                <SelectItem value="all">All Regions</SelectItem>
                 {regions.map((region) => (
                   <SelectItem key={region} value={region}>
                     {region}
@@ -135,24 +142,24 @@ export default function WhereToBuyPage() {
             </Select>
           </div>
 
-          {/* City Select */}
+          {/* Location Select */}
           <div className="w-full">
-            <Label htmlFor="city" className="mb-2 block">
-              City
+            <Label htmlFor="location" className="mb-2 block">
+              Location
             </Label>
             <Select
-              value={selectedCity}
-              onValueChange={setSelectedCity}
-              disabled={!selectedRegion || selectedRegion === "all"}
+              value={selectedLocation}
+              onValueChange={setSelectedLocation}
+              disabled={!selectedRegion}
             >
-              <SelectTrigger className="w-full" id="city">
-                <SelectValue placeholder="Select a city" />
+              <SelectTrigger className="w-full" id="location">
+                <SelectValue placeholder="Select a location" />
               </SelectTrigger>
               <SelectContent className="bg-background">
-                <SelectItem value="all">All Cities</SelectItem>
-                {cities.map((city) => (
-                  <SelectItem key={city} value={city}>
-                    {city}
+                <SelectItem value="all">All Locations</SelectItem>
+                {locations.map((location) => (
+                  <SelectItem key={location} value={location}>
+                    {location}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -161,12 +168,12 @@ export default function WhereToBuyPage() {
         </div>
 
         {/* Clear Filters */}
-        {((selectedRegion && selectedRegion !== "all") ||
-          (selectedCity && selectedCity !== "all")) && (
+        {(selectedRegion ||
+          (selectedLocation && selectedLocation !== "all")) && (
           <button
             onClick={() => {
               setSelectedRegion("");
-              setSelectedCity("");
+              setSelectedLocation("");
             }}
             className="mt-4 text-sm text-primary hover:underline"
           >
@@ -176,58 +183,68 @@ export default function WhereToBuyPage() {
       </div>
 
       {/* Results Count */}
-      <div className="mb-6">
-        <p className="text-gray-600">
-          Showing {filteredDealers.length} result
-          {filteredDealers.length !== 1 ? "s" : ""}
-          {selectedRegion && selectedRegion !== "all" && (
+      {selectedRegion && (
+        <div className="mb-6">
+          <p className="text-gray-600">
+            Showing {filteredDealers.length} result
+            {filteredDealers.length !== 1 ? "s" : ""}
             <span>
               {" "}
               in{" "}
-              {selectedCity && selectedCity !== "all"
-                ? `${selectedCity}, `
+              {selectedLocation && selectedLocation !== "all"
+                ? `${selectedLocation}, `
                 : ""}
               {selectedRegion}
             </span>
-          )}
-        </p>
-      </div>
+          </p>
+        </div>
+      )}
 
-      {/* Dealer Sections */}
-      <div>
+      {/* Dealer Sections (always rendered so empty categories show collapsed with a (0) count) */}
+      <div className="space-y-4">
         <DealerSection
-          title="Partner Dealers"
+          title="Vehicle Partner Dealers"
           dealers={partnerDealers}
-          icon={<Store className="w-8 h-8" />}
+          icon={<Store className="w-6 h-6" />}
+          defaultOpen={partnerDealers.length > 0}
+        />
+
+        <DealerSection
+          title="Tyres & Batteries Dealer Partners"
+          dealers={tyresBatteriesDealers}
+          icon={<Package className="w-6 h-6" />}
         />
 
         <DealerSection
           title="Spares Dealers"
           dealers={sparesDealers}
-          icon={<Package className="w-8 h-8" />}
+          icon={<Package className="w-6 h-6" />}
         />
 
         <DealerSection
           title="Service Partners"
           dealers={servicePartners}
-          icon={<Wrench className="w-8 h-8" />}
+          icon={<Wrench className="w-6 h-6" />}
+          defaultOpen={
+            servicePartners.length > 0 && partnerDealers.length === 0
+          }
         />
 
         <DealerSection
           title="Warranty Touch Points"
           dealers={warrantyTouchpoints}
-          icon={<Shield className="w-8 h-8" />}
+          icon={<Shield className="w-6 h-6" />}
         />
       </div>
 
-      {/* No Results */}
-      {filteredDealers.length === 0 && (
+      {/* No Results message (still shown when no dealers match the selected region) */}
+      {filteredDealers.length === 0 && selectedRegion && (
         <div className="text-center py-12">
           <p className="text-xl text-gray-500">
-            No dealers found in the selected location.
+            No locations found in the selected area.
           </p>
           <p className="text-gray-400 mt-2">
-            Try selecting a different region or city.
+            Try selecting a different region or location.
           </p>
         </div>
       )}

@@ -13,6 +13,26 @@
  */
 
 // Source: schema.json
+export type ServicePartner = {
+  _id: string;
+  _type: "servicePartner";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  type?: "service_partner" | "warranty_touchpoint";
+  vehicleTypes?: Array<string>;
+  regions?: Array<string>;
+  towns?: Array<string>;
+  zone?: string;
+  branch?: string;
+  address?: string;
+  contactNumbers?: Array<string>;
+  channelId?: string;
+  bays?: number;
+  disabled?: boolean;
+};
+
 export type Dealer = {
   _id: string;
   _type: "dealer";
@@ -22,14 +42,13 @@ export type Dealer = {
   name?: string;
   type?:
     | "partner_dealer"
+    | "tyres_batteries_dealer"
     | "spares_dealer"
     | "service_partner"
     | "warranty_touchpoint";
-  region?: string;
-  city?: string;
-  address?: string;
-  contactNumber?: string;
-  email?: string;
+  regions?: Array<string>;
+  towns?: Array<string>;
+  contactNumbers?: Array<string>;
   disabled?: boolean;
 };
 
@@ -387,6 +406,7 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | ServicePartner
   | Dealer
   | Tyres
   | SanityImageCrop
@@ -405,3 +425,9 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+type ArrayOf<T> = Array<
+  T & {
+    _key: string;
+  }
+>;

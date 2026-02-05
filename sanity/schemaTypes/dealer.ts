@@ -17,7 +17,11 @@ export const dealer = {
       type: "string",
       options: {
         list: [
-          { title: "Partner Dealer", value: "partner_dealer" },
+          { title: "Vehicle Partner Dealer", value: "partner_dealer" },
+          {
+            title: "Tyres & Batteries Dealer Partner",
+            value: "tyres_batteries_dealer",
+          },
           { title: "Spares Dealer", value: "spares_dealer" },
           { title: "Service Partner", value: "service_partner" },
           { title: "Warranty Touch Point", value: "warranty_touchpoint" },
@@ -26,34 +30,33 @@ export const dealer = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: "region",
-      title: "Region",
-      type: "string",
-      validation: (Rule: Rule) => Rule.required(),
+      name: "regions",
+      title: "Regions",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        layout: "tags",
+      },
+      validation: (Rule: Rule) => Rule.required().min(1),
     },
     {
-      name: "city",
-      title: "City",
-      type: "string",
-      validation: (Rule: Rule) => Rule.required(),
+      name: "towns",
+      title: "Towns",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        layout: "tags",
+      },
+      validation: (Rule: Rule) => Rule.required().min(1),
     },
     {
-      name: "address",
-      title: "Full Address",
-      type: "text",
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      name: "contactNumber",
-      title: "Contact Number",
-      type: "string",
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      name: "email",
-      title: "Email",
-      type: "string",
-      validation: (Rule: Rule) => Rule.email(),
+      name: "contactNumbers",
+      title: "Contact Numbers",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        layout: "tags",
+      },
     },
     {
       name: "disabled",
@@ -66,8 +69,8 @@ export const dealer = {
   preview: {
     select: {
       title: "name",
-      subtitle: "city",
-      type: "type",
+      towns: "towns",
+      regions: "regions",
     },
   },
 };

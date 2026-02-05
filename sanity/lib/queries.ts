@@ -69,17 +69,17 @@ export const TYRE_BY_ID = `*[_type == "tyres" && _id == $id && disabled != true]
 // All tyres for product listing
 export const ALL_TYRES = `*[_type == "tyres" && disabled != true] | order(coalesce(ranking, 9999) asc, brand asc, name asc){ _id, name, brand, ranking, "image": images[0], sizes }`;
 
-// All dealers grouped by type
-export const ALL_DEALERS = `*[_type == "dealer" && disabled != true] | order(region asc, city asc, name asc){ _id, name, type, region, city, address, contactNumber, email }`;
+// All dealers and service partners
+export const ALL_DEALERS = `*[(_type == "dealer" || _type == "servicePartner") && disabled != true] | order(name asc){ _id, _type, name, type, regions, towns, contactNumbers, vehicleTypes }`;
 
-// Get unique regions from dealers
-export const DEALER_REGIONS = `array::unique(*[_type == "dealer" && disabled != true].region) | order(@)`;
+// Get unique regions from all locations (flattens the arrays)
+export const DEALER_REGIONS = `array::unique(*[(_type == "dealer" || _type == "servicePartner") && disabled != true].regions[]) | order(@)`;
 
-// Get cities for a specific region. Pass {"region": "regionName"} as params.
-export const DEALER_CITIES_BY_REGION = `array::unique(*[_type == "dealer" && _region == $region && disabled != true].city) | order(@)`;
+// Get towns for a specific region. Pass {"region": "regionName"} as params.
+export const DEALER_TOWNS_BY_REGION = `array::unique(*[(_type == "dealer" || _type == "servicePartner") && $region in regions[] && disabled != true].towns[]) | order(@)`;
 
-// Get dealers filtered by region and city. Pass {"region": "regionName", "city": "cityName"} as params.
-export const DEALERS_BY_LOCATION = `*[_type == "dealer" && region == $region && city == $city && disabled != true] | order(type asc, name asc){ _id, name, type, region, city, address, contactNumber, email }`;
+// Get dealers/service partners filtered by region and/or town. Pass {"region": "regionName", "town": "townName"} as params.
+export const DEALERS_BY_LOCATION = `*[(_type == "dealer" || _type == "servicePartner") && $region in regions[] && $town in towns[] && disabled != true] | order(type asc, name asc){ _id, _type, name, type, regions, towns, contactNumber, vehicleTypes }`;
 
 const queries = {
   ALL_VEHICLES,
@@ -93,7 +93,7 @@ const queries = {
   LATEST_3_VEHICLES,
   ALL_DEALERS,
   DEALER_REGIONS,
-  DEALER_CITIES_BY_REGION,
+  DEALER_TOWNS_BY_REGION,
   DEALERS_BY_LOCATION,
 };
 

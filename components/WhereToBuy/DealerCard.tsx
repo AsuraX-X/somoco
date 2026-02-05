@@ -1,48 +1,81 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import type { Dealer } from "@/sanity.types";
-import { MapPin, Phone, Mail } from "lucide-react";
+import type { Dealer, ServicePartner } from "@/sanity.types";
+import { MapPin, Phone, Bike } from "lucide-react";
 
 interface DealerCardProps {
-  dealer: Dealer;
+  dealer: Dealer | ServicePartner;
 }
 
 export function DealerCard({ dealer }: DealerCardProps) {
-  return (
-    <Card className="p-6 hover:shadow-lg transition-shadow">
-      <h3 className="text-xl font-semibold mb-2">{dealer.name}</h3>
+  // Map vehicle type codes to display names
+  const getVehicleTypeDisplay = (vehicleTypes: string[]): string => {
+    return vehicleTypes
+      .map((type) => {
+        switch (type) {
+          case "2W":
+            return "2 Wheelers";
+          case "3W":
+            return "3 Wheelers";
+          default:
+            return type;
+        }
+      })
+      .join(", ");
+  };
 
-      <div className="space-y-3 text-sm text-gray-600">
-        <div className="flex items-start gap-2">
+  // Check if this is a service partner with vehicle types
+  const hasVehicleTypes =
+    dealer._type === "servicePartner" &&
+    "vehicleTypes" in dealer &&
+    dealer.vehicleTypes &&
+    dealer.vehicleTypes.length > 0;
+
+  return (
+    <Card className="p-6 hover:shadow-lg transition-shadow h-full flex flex-col">
+      <h3 className="text-xl font-semibold min-h-14 flex items-start">
+        {dealer.name}
+      </h3>
+
+      <div className="space-y-4 text-sm text-gray-600 grow">
+        <div className="flex gap-3">
           <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
-          <div>
-            <p>{dealer.address}</p>
-            <p className="text-xs text-gray-500 mt-1">
-              {dealer.city}, {dealer.region}
+          <div className="flex-1 min-w-0">
+            <p className="wrap-break-word">{dealer.towns?.join(", ")}</p>
+            <p className="text-xs text-gray-500 mt-1 wrap-break-word">
+              {dealer.regions?.join(", ")}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Phone className="w-4 h-4 shrink-0 text-primary" />
-          <a
-            href={`tel:${dealer.contactNumber}`}
-            className="hover:text-primary transition-colors"
-          >
-            {dealer.contactNumber}
-          </a>
-        </div>
+        {hasVehicleTypes && (
+          <div className="flex gap-3">
+            <Bike className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
+            <div className="flex-1 min-w-0">
+              <p className="wrap-break-word">
+                {getVehicleTypeDisplay(
+                  (dealer as ServicePartner).vehicleTypes!,
+                )}
+              </p>
+            </div>
+          </div>
+        )}
 
-        {dealer.email && (
-          <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4 shrink-0 text-primary" />
-            <a
-              href={`mailto:${dealer.email}`}
-              className="hover:text-primary transition-colors"
-            >
-              {dealer.email}
-            </a>
+        {dealer.contactNumbers && dealer.contactNumbers.length > 0 && (
+          <div className="flex gap-3">
+            <Phone className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
+            <div className="flex-1 min-w-0 space-y-1">
+              {dealer.contactNumbers.map((number, idx) => (
+                <a
+                  key={idx}
+                  href={`tel:${number}`}
+                  className="hover:text-primary transition-colors break-words block"
+                >
+                  {number}
+                </a>
+              ))}
+            </div>
           </div>
         )}
       </div>
