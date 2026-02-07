@@ -5,6 +5,7 @@ import { client } from "@/sanity/lib/client";
 import { ALL_DEALERS } from "@/sanity/lib/queries";
 import type { Dealer, ServicePartner } from "@/sanity.types";
 import { DealerSection } from "@/components/WhereToBuy/DealerSection";
+import { WhereToBuyTutorial } from "@/components/WhereToBuy/PartnersTutorial";
 import {
   Select,
   SelectContent,
@@ -102,17 +103,20 @@ export default function WhereToBuyPage() {
 
   if (loading) {
     return (
-      <div className="container h-screen mx-auto px-4 py-12">
+      <div className="container h-screen place-content-center mx-auto px-4 py-12">
         <div className="text-center">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="container min-h-screen mx-auto px-4 py-6">
+    <div className="container min-h-screen mx-auto px-4 py-12">
+      {/* Tutorial/Help Component */}
+      <WhereToBuyTutorial />
+
       {/* Header */}
       <div className="mb-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Where to Buy</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Partners</h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Find authorized Somoco dealers, service partners, and warranty touch
           points near you.
@@ -132,7 +136,7 @@ export default function WhereToBuyPage() {
               <SelectTrigger className="w-full" id="region">
                 <SelectValue placeholder="Select a region" />
               </SelectTrigger>
-              <SelectContent className="bg-background">
+              <SelectContent className="bg-background z-50">
                 {regions.map((region) => (
                   <SelectItem key={region} value={region}>
                     {region}
@@ -155,7 +159,7 @@ export default function WhereToBuyPage() {
               <SelectTrigger className="w-full" id="location">
                 <SelectValue placeholder="Select a location" />
               </SelectTrigger>
-              <SelectContent className="bg-background">
+              <SelectContent className="bg-background z-50">
                 <SelectItem value="all">All Locations</SelectItem>
                 {locations.map((location) => (
                   <SelectItem key={location} value={location}>

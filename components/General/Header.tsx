@@ -52,7 +52,7 @@ const Header = () => {
         ease: "easeInOut",
         duration: 0.3,
       }}
-      className="h-14 fixed top-0 w-full z-100 flex items-center sm:px-20 px-4 justify-between bg-primary"
+      className="h-14 fixed top-0 w-full z-40 flex items-center sm:px-20 px-4 justify-between bg-primary"
     >
       <Link href={"/"}>
         <div>

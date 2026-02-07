@@ -180,9 +180,9 @@ export function Menu() {
                         <DrawerClose asChild>
                           <Link
                             className="text-[16px] hover:underline"
-                            href="/where-to-buy"
+                            href="/partners"
                           >
-                            Where To Buy
+                            Our Partners
                           </Link>
                         </DrawerClose>
                       </li>
