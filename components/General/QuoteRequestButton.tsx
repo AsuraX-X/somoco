@@ -5,7 +5,7 @@ import { useQuoteRequest } from "./QuoteRequestContext";
 
 interface QuoteRequestButtonProps {
   productName: string;
-  productType: "vehicle" | "tyre";
+  productType: "vehicle" | "tyre" | "battery";
   className?: string;
 }
 

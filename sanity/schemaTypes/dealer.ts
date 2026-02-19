@@ -2,7 +2,7 @@ import type { Rule } from "sanity";
 
 export const dealer = {
   name: "dealer",
-  title: "Dealer/Service Partner",
+  title: "Dealer",
   type: "document",
   fields: [
     {

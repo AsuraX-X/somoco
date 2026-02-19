@@ -23,13 +23,22 @@ import TyresMenu from "./TyresMenu";
 
 export function Menu() {
   const [types, setTypes] = React.useState<string[]>([]);
-  const batteryTypes = ["Coming Soon"]; // Static until batteries are implemented
+  const [batteryTypes, setBatteryTypes] = React.useState<string[]>([]);
   const [tyreTypes, setTyreTypes] = React.useState<string[]>([]);
   const [view, setView] = React.useState<
     "main" | "vehicles" | "batteries" | "tyres"
   >("main");
 
   React.useEffect(() => {
+    // fetch battery brands
+    client
+      .fetch<string[]>(`*[_type == "battery"].brand`)
+      .then((res) => {
+        const t = Array.from(new Set(res.filter(Boolean)));
+        setBatteryTypes(t as string[]);
+      })
+      .catch(() => setBatteryTypes([]));
+
     // fetch type values from vehicle documents and dedupe
     client
       .fetch<string[]>(`*[_type == "vehicle"].type`)

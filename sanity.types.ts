@@ -13,6 +13,49 @@
  */
 
 // Source: schema.json
+export type Battery = {
+  _id: string;
+  _type: "battery";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  brand?: string;
+  name?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  features?: Array<{
+    title?: string;
+    details?: Array<string>;
+    _key: string;
+  }>;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
 export type ServicePartner = {
   _id: string;
   _type: "servicePartner";
@@ -142,22 +185,6 @@ export type Tyres = {
     _type: "image";
     _key: string;
   }>;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
 };
 
 export type Blog = {
@@ -406,11 +433,12 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | Battery
+  | SanityImageCrop
+  | SanityImageHotspot
   | ServicePartner
   | Dealer
   | Tyres
-  | SanityImageCrop
-  | SanityImageHotspot
   | Blog
   | Markdown
   | Slug

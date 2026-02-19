@@ -69,6 +69,18 @@ export const TYRE_BY_ID = `*[_type == "tyres" && _id == $id && disabled != true]
 // All tyres for product listing
 export const ALL_TYRES = `*[_type == "tyres" && disabled != true] | order(coalesce(ranking, 9999) asc, brand asc, name asc){ _id, name, brand, ranking, "image": images[0], sizes }`;
 
+// All batteries for product listing
+export const ALL_BATTERIES = `*[_type == "battery"] | order(brand asc, name asc){ _id, name, brand, image }`;
+
+// Fetch a single battery by _id. Pass {"id": "<docId>"} as params.
+export const BATTERY_BY_ID = `*[_type == "battery" && _id == $id][0]{
+  _id,
+  name,
+  brand,
+  image,
+  features
+}`;
+
 // All dealers and service partners
 export const ALL_DEALERS = `*[(_type == "dealer" || _type == "servicePartner") && disabled != true] | order(name asc){ _id, _type, name, type, regions, towns, contactNumbers, vehicleTypes }`;
 
@@ -90,6 +102,8 @@ const queries = {
   TYRES_FOR_CAROUSEL,
   TYRE_BY_ID,
   ALL_TYRES,
+  ALL_BATTERIES,
+  BATTERY_BY_ID,
   LATEST_3_VEHICLES,
   ALL_DEALERS,
   DEALER_REGIONS,

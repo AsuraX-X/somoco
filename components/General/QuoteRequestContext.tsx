@@ -5,8 +5,11 @@ import { createContext, useContext, useState, ReactNode } from "react";
 interface QuoteRequestContextType {
   isOpen: boolean;
   productName: string;
-  productType: "vehicle" | "tyre";
-  openQuoteForm: (productName: string, productType: "vehicle" | "tyre") => void;
+  productType: "vehicle" | "tyre" | "battery";
+  openQuoteForm: (
+    productName: string,
+    productType: "vehicle" | "tyre" | "battery",
+  ) => void;
   closeQuoteForm: () => void;
 }
 
@@ -15,9 +18,14 @@ const QuoteRequestContext = createContext<QuoteRequestContextType | null>(null);
 export function QuoteRequestProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [productName, setProductName] = useState("");
-  const [productType, setProductType] = useState<"vehicle" | "tyre">("vehicle");
+  const [productType, setProductType] = useState<
+    "vehicle" | "tyre" | "battery"
+  >("vehicle");
 
-  const openQuoteForm = (name: string, type: "vehicle" | "tyre") => {
+  const openQuoteForm = (
+    name: string,
+    type: "vehicle" | "tyre" | "battery",
+  ) => {
     setProductName(name);
     setProductType(type);
     setIsOpen(true);
