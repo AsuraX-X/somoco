@@ -8,6 +8,7 @@ type ProductsPageProps = {
   title: string;
   bannerImage: string;
   bannerAlt: string;
+  bannerContain?: boolean;
   contentType: string; // "vehicle" or "tyre"
   filterField: string; // "type" for vehicles, "brand" for tyres
   filterLabel: string; // "Type" for vehicles, "Brand" for tyres
@@ -22,6 +23,7 @@ function ProductsPageContent({
   title,
   bannerImage,
   bannerAlt,
+  bannerContain,
   contentType,
   filterField,
   filterLabel,
@@ -63,16 +65,20 @@ function ProductsPageContent({
 
   return (
     <div className="min-h-screen">
-      <div className="w-full max-h-[430px] relative h-full">
+      <div className={`w-full relative${bannerContain ? " bg-muted" : ""}`}>
         <Image
           src={bannerImage}
           alt={bannerAlt}
-          width={430}
-          height={0}
+          width={1920}
+          height={bannerContain ? 0 : 430}
           unoptimized
-          className="h-full w-full"
+          className={
+            bannerContain
+              ? "w-full h-auto max-h-150 object-contain"
+              : "h-full w-full max-h-107.5 object-cover"
+          }
         />
-        <h1 className="absolute bottom-2 sm:bottom-5 px-4 sm:px-20 text-white font-extrabold text-2xl sm:text-4xl shadow-2xl uppercase text-shadow-2xs text-shadow-accent-foreground/30">
+        <h1 className="absolute bottom-2 sm:bottom-5 px-4 sm:px-20 text-white font-extrabold text-2xl sm:text-4xl bg-linear-to-r from-black to-transparent uppercase text-shadow-2xs text-shadow-accent-foreground/30">
           {title}
         </h1>
       </div>

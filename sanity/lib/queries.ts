@@ -77,8 +77,14 @@ export const BATTERY_BY_ID = `*[_type == "battery" && _id == $id][0]{
   _id,
   name,
   brand,
+  banner,
   image,
-  features
+  features[]{
+    _key,
+    title,
+    images,
+    details
+  }
 }`;
 
 // All dealers and service partners

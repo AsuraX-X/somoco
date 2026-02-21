@@ -4,7 +4,7 @@ import VehicleGrid from "@/components/Products/VehicleGrid";
 const VehiclesPage = () => {
   return (
     <ReusableProductsPage
-      title="Products"
+      title="Vehicles"
       bannerImage="/banners/products-banner.jpg"
       bannerAlt="about us banner"
       contentType="vehicle"

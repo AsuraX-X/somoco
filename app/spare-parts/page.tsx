@@ -16,7 +16,7 @@ const SpareParts = () => {
     <div>
       <div className="w-full max-h-107.5 relative h-full">
         <Image
-          src={"/banners/service-banner.png"}
+          src={"/banners/Spares.jpg"}
           alt="service banner"
           width={430}
           height={0}

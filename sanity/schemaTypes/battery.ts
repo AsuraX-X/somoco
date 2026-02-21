@@ -17,6 +17,14 @@ export const battery = {
       type: "string",
     },
     {
+      name: "banner",
+      title: "Battery Banner",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    },
+    {
       name: "image",
       title: "Battery Image",
       type: "image",
@@ -32,6 +40,11 @@ export const battery = {
         {
           type: "object",
           fields: [
+            {
+              name: "images",
+              title: "Feature IMage",
+              type: "image",
+            },
             {
               name: "title",
               title: "Feature Title",

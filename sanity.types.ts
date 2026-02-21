@@ -21,6 +21,18 @@ export type Battery = {
   _rev: string;
   brand?: string;
   name?: string;
+  banner?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   image?: {
     asset?: {
       _ref: string;
@@ -34,6 +46,18 @@ export type Battery = {
     _type: "image";
   };
   features?: Array<{
+    images?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
     title?: string;
     details?: Array<string>;
     _key: string;
@@ -453,9 +477,3 @@ export type AllSanitySchemaTypes =
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
-
-type ArrayOf<T> = Array<
-  T & {
-    _key: string;
-  }
->;

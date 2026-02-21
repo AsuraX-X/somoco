@@ -5,8 +5,9 @@ const BatteriesPage = () => {
   return (
     <ReusableProductsPage
       title="Batteries"
-      bannerImage="/banners/products-banner.jpg"
+      bannerImage="/banners/battery-banner.jpg"
       bannerAlt="batteries banner"
+      bannerContain
       contentType="battery"
       filterField="brand"
       filterLabel="Brand"
