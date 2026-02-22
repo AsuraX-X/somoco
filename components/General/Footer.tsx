@@ -1,9 +1,13 @@
-import { Facebook, Instagram, Mail, Phone } from "lucide-react";
+"use client";
+import { ChevronLeft, Facebook, Instagram, Mail, Phone } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Footer() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <footer className="border-t mt-12 border-white/10 text-white bg-primary">
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -26,52 +30,109 @@ export default function Footer() {
             </p>
           </div>
 
-          <div>
+          <div className="overflow-hidden">
             <h3 className="text-xl font-medium mb-3 text-white/90">
               Quick Links
             </h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+            <AnimatePresence mode="wait" initial={false}>
+              {!isOpen ? (
+                <motion.ul
+                  key="main"
+                  initial={{ x: "-100%", opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: "-100%", opacity: 0 }}
+                  transition={{ duration: 0.22 }}
+                  className="space-y-2"
                 >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/products"
-                  className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                  <li>
+                    <Link
+                      href="/about"
+                      className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                    >
+                      About Us
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => setIsOpen(true)}
+                      className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                    >
+                      Products
+                    </button>
+                  </li>
+                  <li>
+                    <Link
+                      href="/services"
+                      className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                    >
+                      Services
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/blogs"
+                      className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                    >
+                      Blogs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/contact"
+                      className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                    >
+                      Contact Us
+                    </Link>
+                  </li>
+                </motion.ul>
+              ) : (
+                <motion.ul
+                  key="products"
+                  initial={{ x: "100%", opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: "100%", opacity: 0 }}
+                  transition={{ duration: 0.22 }}
+                  className="space-y-2"
                 >
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blogs"
-                  className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
-                >
-                  Blogs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
-                >
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
+                  <li>
+                    <button
+                      onClick={() => setIsOpen(false)}
+                      className="flex text-sm text-white/80 hover:underline hover:text-white transition-colors items-center"
+                    >
+                      <ChevronLeft size={16} />
+                      Back
+                    </button>
+                  </li>
+                  <li>
+                    <Link
+                      onClick={() => setIsOpen(false)}
+                      className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                      href={"/vehicles"}
+                    >
+                      Vehicles
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      onClick={() => setIsOpen(false)}
+                      className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                      href={"/tyres"}
+                    >
+                      Tyres
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      onClick={() => setIsOpen(false)}
+                      className="text-sm text-white/80 hover:underline hover:text-white transition-colors"
+                      href={"/batteries"}
+                    >
+                      Batteries
+                    </Link>
+                  </li>
+                </motion.ul>
+              )}
+            </AnimatePresence>
           </div>
 
           <div>
