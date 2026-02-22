@@ -143,20 +143,34 @@ export default function Footer() {
               <div className="flex items-center gap-2">
                 <Mail size={20} />
                 <a
-                  href="mailto:b2b1@somotex.com"
+                  href="mailto:info@somocoghana.com"
                   className="block text-white/80 hover:underline"
                 >
-                  b2b1@somotex.com
+                  info@somocoghana.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone size={20} />
-                <a
-                  href="tel:+233531033489"
-                  className="block text-white/80 hover:underline"
-                >
-                  +233 531 033 489
-                </a>
+                <div>
+                  <a
+                    href="tel:+233531033489"
+                    className="block text-white/80 hover:underline"
+                  >
+                    +233 531 033 489
+                  </a>
+                  <a
+                    href="tel:+233501578360"
+                    className="block text-white/80 hover:underline"
+                  >
+                    +233 501 578 360
+                  </a>
+                  <a
+                    href="tel:+233247970012"
+                    className="block text-white/80 hover:underline"
+                  >
+                    +233 247 970 012
+                  </a>
+                </div>
               </div>
 
               <div className="pt-4">
