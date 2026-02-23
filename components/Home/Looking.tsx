@@ -73,8 +73,8 @@ const Looking = () => {
               <p>
                 We have a wide portfolio of parts and accessories for your
                 biking needs. Call{" "}
-                <a className=" underline" href="tel:+2330540112783">
-                  054 011 2783
+                <a className=" underline" href="tel:+2330501578374">
+                  050 157 8374
                 </a>{" "}
                 today!
               </p>

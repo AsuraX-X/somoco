@@ -27,7 +27,7 @@ const Why = () => {
     },
     {
       title: "Vehicle Service Maintenance",
-      desc: "Expert maintenance advice and support. Call 050 329 0556.",
+      desc: "Expert maintenance advice and support. Call 024 136 0448.",
       icon: <Wrench className="size-6" />,
     },
   ];
