@@ -6,16 +6,16 @@ import Locations from "@/components/Contact/Locations";
 const ContactUs = () => {
   return (
     <div>
-      <div className="w-full max-h-107.5 relative h-full">
+      <div className="w-full overflow-hidden max-h-107.5 relative h-full">
         <Image
-          src={"/banners/contact-banner.png"}
+          src={"/banners/contact-banner.jpg"}
           alt="about us banner"
           width={430}
           height={0}
           unoptimized
           className="h-full w-full"
         />
-        <h1 className="absolute bottom-2 sm:bottom-5 px-4 sm:px-20 text-white font-extrabold text-2xl sm:text-4xl shadow-2xl uppercase text-shadow-2xs text-shadow-accent-foreground/30">
+        <h1 className="absolute bottom-2 sm:bottom-5 px-4 sm:px-20 bg-linear-to-r from-black to-transparent text-white font-extrabold text-2xl sm:text-4xl uppercase">
           Contact Us
         </h1>
       </div>
