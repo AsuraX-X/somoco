@@ -19,7 +19,7 @@ const ServicesPage = () => {
 
   return (
     <div>
-      <div className="w-full max-h-[430px] relative h-full">
+      <div className="w-full max-h-107.5 relative h-full">
         <Image
           src={"/banners/service-banner.png"}
           alt="service banner"
@@ -32,14 +32,14 @@ const ServicesPage = () => {
           Services
         </h1>
       </div>
-      <div className="grid md:max-h-[650px] md:grid-cols-2 gap-4 my-10 px-4 sm:px-20 grid-cols-1">
+      <div className="grid md:max-h-162.5 md:grid-cols-2 gap-4 my-10 px-4 sm:px-20 grid-cols-1">
         <div className="h-full  order-2 md:order-1 flex flex-col justify-center ">
           <div className="space-y-2">
             <h1 className="text-4xl font-extrabold">
               SOMOCO VEHICLE SERVICE CENTER
             </h1>
             <p>
-              We offer 12 months Engine Warranty on our Motorcycle range as well
+              We offer 18 months Engine Warranty on our Motorcycle range as well
               as Bajaj R.E tricycles. Our Technical Team & mechanics are readily
               available to offer you the best of maintenance and repair support
               any day.
@@ -70,7 +70,7 @@ const ServicesPage = () => {
               className="w-full h-full rounded-lg object-cover"
             />
           </div>
-          <div className="w-full capitalize flex items-center justify-center bg-primary text-white rounded-lg max-w-[115px]">
+          <div className="w-full capitalize flex items-center justify-center bg-primary text-white rounded-lg max-w-28.75">
             <p className="sm:text-3xl text-2xl rotate-90 text-nowrap ">
               Service since 10+ years
             </p>
