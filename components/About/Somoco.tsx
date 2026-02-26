@@ -32,7 +32,7 @@ const Somoco = () => {
         We have consistently delivered the best Aftersales Support services over
         the years with well-groomed, trained and certified technicians
         nationwide. Our Aftersales Support Services includes but not limited to
-        6-12months product warranty, provision of high quality & durable spare
+        18 months engine warranty, provision of high quality & durable spare
         parts, expert advice on maintenance, road safety advice and many more
         relevant support services.
       </p>

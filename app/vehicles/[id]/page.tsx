@@ -144,7 +144,7 @@ export default async function VehiclePage({ params }: Props) {
             {/* Specs */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6 mt-8">
               <div>
-                <h4 className="text-sm font-medium">Capacity</h4>
+                <h4 className="text-sm font-medium">Fuel Capacity</h4>
                 <p className="text-2xl">{vehicle.capacity ?? "—"}</p>
               </div>
               <div>
