@@ -51,17 +51,17 @@ const Mohinani = () => {
         </p>
       </div>
 
-      <div className="w-full max-h-[340px] h-full mt-6">
+      <div className="w-full relative h-full mt-6">
         <Image
           src={"/about/how-to-2.png"}
           alt="about us banner"
           width={0}
           height={0}
           unoptimized
-          className="h-full w-full"
+          className="h-full w-full object-cover"
         />
       </div>
-      <div className="mt-6 space-y-2">
+      <div className="mt-8 space-y-2">
         <h3 className="text-2xl font-bold">
           Our Approach — Our Strategic Direction & Essence
         </h3>
@@ -117,35 +117,33 @@ const Mohinani = () => {
         <div className="space-y-2">
           <h3 className="text-2xl font-bold">Our Values</h3>
           <p>
-            At Mohinani, our operations revolve around core values that
-            emphasise our commitment to the growth of all stakeholders. Our
-            values come to life through the dedication of employees, clients and
-            partners.
+            Our values are the fundamental principles that guide daily behavior
+            of each employee within our business group. We have four values that
+            we encourage all members of the group to live every day.
           </p>
+          <div className="sm:grid-cols-2 grid mb-2">
+            <div>
+              <h4 className="text-xl font-semibold">Evolve And Explore</h4>
+              <p>We embrace change with a pioneering spirit.</p>
+            </div>
 
-          <h4 className="text-xl font-semibold">Our Essence is People</h4>
-          <p>
-            People are the essence of the Mohinani Group. While we strive to
-            deliver great products and services, it is people who make this
-            possible. At Mohinani, people come first and business second. We
-            care about the impact of our decisions on team members, clients and
-            stakeholders.
-          </p>
+            <div>
+              <h4 className="text-xl font-semibold">Feet On The Ground</h4>
+              <p>
+                We are grounded in humility and thrive through practicality.
+              </p>
+            </div>
 
-          <h4 className="text-xl font-semibold">The Buck Stops with Me</h4>
-          <p>
-            We believe each employee is accountable for achieving outstanding
-            results by growing sustainable brands through innovation,
-            consistency and efficiency. Team members are expected to own
-            responsibilities, act on what they see and deliver on commitments.
-          </p>
+            <div>
+              <h4 className="text-xl font-semibold">Put People First</h4>
+              <p>We achieve the most when we work together.</p>
+            </div>
 
-          <h4 className="text-xl font-semibold">Partners for the Long Haul</h4>
-          <p>
-            As a multi-generational family business, we value our history,
-            culture and long-term relationships. We focus on patient, long-term
-            growth and nurturing brands that stand the test of time.
-          </p>
+            <div>
+              <h4 className="text-xl font-semibold">Go The Extra Mile</h4>
+              <p>We exceed our promise to maximise customer success.</p>
+            </div>
+          </div>
         </div>
       </div>
       <div>

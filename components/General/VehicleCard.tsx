@@ -36,26 +36,26 @@ export default function VehicleCard({
   return (
     <Item variant={"outline"}>
       <ItemHeader className="relative">
-        <Image
-          src={"/ui/inner-bg.png"}
-          alt={"background"}
-          width={128}
-          height={128}
-          unoptimized
-          className="aspect-square absolute w-full rounded-sm object-cover"
-        />
-        {image ? (
+        <div className="relative w-full aspect-square rounded-sm overflow-hidden">
           <Image
-            src={image}
-            alt={name ?? "vehicle image"}
-            width={128}
-            height={128}
+            src={"/ui/inner-bg.png"}
+            alt={"background"}
+            fill
             unoptimized
-            className="aspect-square z-10 w-full rounded-sm object-contain"
+            className="object-cover"
           />
-        ) : (
-          <div className="aspect-square z-10 w-full rounded-sm bg-muted-foreground/10" />
-        )}
+          {image ? (
+            <Image
+              src={image}
+              alt={name ?? "vehicle image"}
+              fill
+              unoptimized
+              className="z-10 object-contain"
+            />
+          ) : (
+            <div className="absolute inset-0 z-10 bg-muted-foreground/10" />
+          )}
+        </div>
       </ItemHeader>
       <div className="flex flex-col  w-full">
         <ItemContent>

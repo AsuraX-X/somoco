@@ -28,14 +28,15 @@ export default function BatteryCard({ name, brand, image, id }: Props) {
     <Item className="h-full flex-col! items-stretch!" variant={"outline"}>
       <div className="relative shrink-0 w-full">
         {image ? (
-          <Image
-            src={image}
-            alt={name}
-            width={128}
-            height={128}
-            unoptimized
-            className="z-10 w-full aspect-square rounded-sm object-contain"
-          />
+          <div className="relative w-full aspect-square overflow-hidden rounded-sm">
+            <Image
+              src={image}
+              alt={name}
+              fill
+              unoptimized
+              className="z-10 rounded-sm object-contain"
+            />
+          </div>
         ) : (
           <div className="aspect-square z-10 w-full rounded-sm bg-muted-foreground/10" />
         )}

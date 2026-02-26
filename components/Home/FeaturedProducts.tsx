@@ -39,7 +39,7 @@ const FeaturedProducts = () => {
             id: v._id,
             name: v.name,
             image: v.image
-              ? urlFor(v.image).width(800).height(600).url()
+              ? urlFor(v.image).width(800).auto("format").url()
               : undefined,
             engine: v.engine,
             horsepower: v.horsepower,

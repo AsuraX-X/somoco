@@ -19,7 +19,7 @@ const VehicleCarousel = () => {
         horsepower?: Vehicle["horsepower"];
       }) => {
         const image = v.image
-          ? urlFor(v.image).width(800).height(600).url()
+          ? urlFor(v.image).width(800).auto("format").url()
           : undefined;
         return (
           <VehicleCard
