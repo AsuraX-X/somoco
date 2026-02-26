@@ -36,7 +36,9 @@ export default function VehicleGrid({ search, selectedType }: Props) {
       _id: v._id,
       name: v.name,
       type: v.type,
-      image: v.image ? urlFor(v.image).width(800).height(600).url() : undefined,
+      image: v.image
+        ? urlFor(v.image).width(800).auto("format").url()
+        : undefined,
       engine: v.engine,
       horsepower: v.horsepower,
     }))
