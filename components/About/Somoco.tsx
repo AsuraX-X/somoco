@@ -31,10 +31,10 @@ const Somoco = () => {
       <p>
         We have consistently delivered the best Aftersales Support services over
         the years with well-groomed, trained and certified technicians
-        nationwide. Our Aftersales Support Services includes but not limited to
-        18 months engine warranty, provision of high quality & durable spare
-        parts, expert advice on maintenance, road safety advice and many more
-        relevant support services.
+        nationwide. Our Aftersales Support Services include 18-month Engine
+        Warranty, provision of high quality & durable spare parts, expert advice
+        on maintenance, road safety advice and many more relevant support
+        services.
       </p>
     </div>
   );
