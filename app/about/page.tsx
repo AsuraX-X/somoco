@@ -11,9 +11,13 @@ const AboutUs = () => {
 
   return (
     <div>
-      <div className="w-full max-h-[430px] relative h-full">
+      <div className="w-full max-h-107.5 relative h-full">
         <Image
-          src={"/banners/about-banner.png"}
+          src={
+            focus === "Mohinani"
+              ? "/banners/about-mohinani.jpg"
+              : "/banners/about-somoco.jpg"
+          }
           alt="about us banner"
           width={430}
           height={0}
