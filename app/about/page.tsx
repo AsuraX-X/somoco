@@ -16,7 +16,9 @@ const AboutUs = () => {
           src={
             focus === "Mohinani"
               ? "/banners/about-mohinani.jpg"
-              : "/banners/about-somoco.jpg"
+              : focus === "Bajaj"
+                ? "/banners/about-bajaj.png"
+                : "/banners/about-somoco.jpg"
           }
           alt="about us banner"
           width={430}
