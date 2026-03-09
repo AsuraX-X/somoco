@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 
 const Mohinani = () => {
@@ -51,16 +50,6 @@ const Mohinani = () => {
         </p>
       </div>
 
-      <div className="w-full relative h-full mt-6">
-        <Image
-          src={"/about/how-to-2.png"}
-          alt="about us banner"
-          width={0}
-          height={0}
-          unoptimized
-          className="h-full w-full object-cover"
-        />
-      </div>
       <div className="mt-8 space-y-2">
         <h3 className="text-2xl font-bold">
           Our Approach — Our Strategic Direction & Essence
@@ -87,7 +76,7 @@ const Mohinani = () => {
           sub-Saharan African markets.
         </p>
       </div>
-      <div className="flex flex-col lg:flex-row items-center">
+      <div >
         <div>
           <h2 className="text-xl font-bold">Our Mission</h2>
           <p>
@@ -102,16 +91,7 @@ const Mohinani = () => {
             <li>Real Estate & Hospitality</li>
           </ul>
         </div>
-        <div className="w-full p-4 min-w-[410px] h-full">
-          <Image
-            src={"/about/goals.png"}
-            alt="about us banner"
-            width={0}
-            height={0}
-            unoptimized
-            className="h-full rounded-lg w-full"
-          />
-        </div>
+
       </div>
       <div>
         <div className="space-y-2">
@@ -147,33 +127,6 @@ const Mohinani = () => {
         </div>
       </div>
       <div>
-        <div className="grid gap-6 pt-4 grid-cols-3">
-          <Image
-            src={"/about/about-2.png"}
-            alt="about us banner"
-            width={0}
-            height={0}
-            unoptimized
-            className="h-full  aspect-square object-cover object-center rounded-lg w-full"
-          />
-          <Image
-            src={"/about/about-3.png"}
-            alt="about us banner"
-            width={0}
-            height={0}
-            unoptimized
-            className="h-full  aspect-square object-cover object-center rounded-lg w-full"
-          />
-          <Image
-            src={"/about/about-4.png"}
-            alt="about us banner"
-            width={0}
-            height={0}
-            unoptimized
-            className="h-full  aspect-square object-cover object-center rounded-lg w-full"
-          />
-        </div>
-
         <div className="mt-6">
           <h3 className="text-2xl font-bold">Feet on the Ground</h3>
           <p>
