@@ -1,7 +1,38 @@
+import type { Metadata } from "next";
 import { Calendar, MapPin, PhoneCall } from "lucide-react";
 import Image from "next/image";
 import ContactForm from "@/components/Contact/ContactFrom";
 import Locations from "@/components/Contact/Locations";
+
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description:
+    "Get in touch with Somoco Ghana Limited. Visit us at North Industrial Area, Dadeban Road, Accra, or call 0501578360 / 0247970012. Mon–Sat, 8am–5pm.",
+  keywords: [
+    "Somoco contact",
+    "Somoco Ghana address",
+    "Bajaj dealer contact Ghana",
+    "vehicle service contact Accra",
+    "Somoco phone number",
+  ],
+  openGraph: {
+    title: "Contact Us | Somoco Ghana Limited",
+    description:
+      "Reach our team for sales, service and support. Located at North Industrial Area, Dadeban Road, Accra.",
+    url: "https://www.somocoghana.com/contact",
+    images: [
+      {
+        url: "/banners/contact-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Contact Somoco Ghana Limited",
+      },
+    ],
+  },
+  alternates: {
+    canonical: "https://www.somocoghana.com/contact",
+  },
+};
 
 const ContactUs = () => {
   return (

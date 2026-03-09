@@ -1,10 +1,48 @@
+import type { Metadata } from "next";
 import React from "react";
+import Image from "next/image";
 import { ItemGroup } from "@/components/ui/item";
 import { BlogCard } from "@/components/Blog/BlogCard";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import type { Blog } from "@/sanity.types";
-import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Blogs",
+  description:
+    "Read the latest news, updates, and insights from Somoco Ghana Limited. Stay informed about Bajaj vehicles, promotions, and the automotive industry in Ghana.",
+  keywords: [
+    "Somoco blog",
+    "Bajaj Ghana news",
+    "vehicle news Ghana",
+    "Somoco updates",
+    "automotive blog Ghana",
+  ],
+  openGraph: {
+    title: "Blogs | Somoco Ghana Limited",
+    description:
+      "Read the latest news, updates, and insights from Somoco Ghana Limited.",
+    url: "https://www.somocoghana.com/blogs",
+    images: [
+      {
+        url: "/banners/blogs-banner.png",
+        width: 1200,
+        height: 630,
+        alt: "Somoco Ghana Limited – Blogs",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blogs | Somoco Ghana Limited",
+    description:
+      "Read the latest news, updates, and insights from Somoco Ghana Limited.",
+    images: ["/banners/blogs-banner.png"],
+  },
+  alternates: {
+    canonical: "https://www.somocoghana.com/blogs",
+  },
+};
 
 const query = `*[_type == "blog"] | order(publishedAt desc){_id, title, excerpt, mainImage, publishedAt}`;
 

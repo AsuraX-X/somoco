@@ -1,6 +1,7 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Somoco Ghana Limited",
+  "short_name": "Somoco",
+  "description": "Authorized distributor for Bajaj vehicles, tyres, and batteries in Ghana.",
   "icons": [
     {
       "src": "/favicon_io/android-chrome-192x192.png",
@@ -13,7 +14,9 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#c0392b",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
 }

@@ -1,8 +1,64 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { TYRE_BY_ID } from "@/sanity/lib/queries";
 import type { Tyres } from "@/sanity.types";
+
+const SITE_URL = "https://www.somocoghana.com";
+
+type MetaTyre = {
+  _id: string;
+  name?: string | null;
+  brand?: string | null;
+  images?: Parameters<typeof urlFor>[0][];
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+
+  if (!id) return { title: "Tyre" };
+
+  try {
+    const tyre = await client.fetch<MetaTyre | null>(
+      `*[_type == "tyres" && _id == $id && disabled != true][0]{ _id, name, brand, images }`,
+      { id },
+    );
+
+    if (!tyre) return { title: "Tyre Not Found" };
+
+    const displayName = tyre.name || tyre.brand || "Tyre";
+    const ogImage =
+      tyre.images && tyre.images.length > 0
+        ? urlFor(tyre.images[0]).width(1200).height(630).url()
+        : "/banners/tyres-banner.jpg";
+
+    return {
+      title: displayName,
+      description: `Explore the ${displayName} tyre available at Somoco Ghana Limited. Request a quote or find sizing information for motorcycles and commercial vehicles.`,
+      openGraph: {
+        title: `${displayName} | Somoco Ghana Limited`,
+        description: `Explore the ${displayName} tyre available at Somoco Ghana Limited.`,
+        url: `${SITE_URL}/tyres/${id}`,
+        images: [{ url: ogImage, width: 1200, height: 630, alt: displayName }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${displayName} | Somoco Ghana Limited`,
+        images: [ogImage],
+      },
+      alternates: {
+        canonical: `${SITE_URL}/tyres/${id}`,
+      },
+    };
+  } catch {
+    return { title: "Tyre" };
+  }
+}
 import {
   Carousel,
   CarouselContent,

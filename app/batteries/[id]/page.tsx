@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
@@ -9,6 +10,55 @@ import QuoteRequestButton from "@/components/General/QuoteRequestButton";
 type Props = {
   params: { id: string };
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = (await params) as { id?: string };
+  if (!id) return { title: "Battery" };
+
+  const SITE_URL = "https://www.somocoghana.com";
+
+  try {
+    const battery = await client.fetch<Pick<
+      Battery,
+      "_id" | "name" | "brand" | "banner" | "image"
+    > | null>(
+      `*[_type == "battery" && _id == $id][0]{ _id, name, brand, banner, image }`,
+      { id },
+    );
+
+    if (!battery) return { title: "Battery" };
+
+    const label = [battery.brand, battery.name].filter(Boolean).join(" – ");
+    const imageUrl = battery.banner
+      ? urlFor(battery.banner).width(1200).height(630).url()
+      : battery.image
+        ? urlFor(battery.image).width(1200).height(630).url()
+        : undefined;
+
+    return {
+      title: label || "Battery",
+      description: `${label} — quality automotive battery available at Somoco Ghana Limited. Request a quote today.`,
+      openGraph: {
+        title: `${label} | Somoco Ghana Limited`,
+        description: `${label} — quality automotive battery available at Somoco Ghana Limited.`,
+        url: `${SITE_URL}/batteries/${id}`,
+        images: imageUrl
+          ? [{ url: imageUrl, width: 1200, height: 630, alt: label }]
+          : [],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${label} | Somoco Ghana Limited`,
+        images: imageUrl ? [imageUrl] : [],
+      },
+      alternates: {
+        canonical: `${SITE_URL}/batteries/${id}`,
+      },
+    };
+  } catch {
+    return { title: "Battery" };
+  }
+}
 
 export default async function BatteryPage({ params }: Props) {
   const { id } = (await params) as { id?: string };

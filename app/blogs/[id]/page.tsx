@@ -1,21 +1,75 @@
+import type { Metadata } from "next";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import MarkdownIt from "markdown-it";
 import type { Blog } from "@/sanity.types";
 
-type Props = { params: { id: string } };
+const SITE_URL = "https://www.somocoghana.com";
+
+type Props = { params: Promise<{ id: string }> };
+
+const blogQuery = `*[_type == "blog" && _id == $id][0]{_id, title, excerpt, body, mainImage, publishedAt}`;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+
+  if (!id) return { title: "Blog" };
+
+  const blog = await client.fetch<Blog | null>(blogQuery, { id });
+
+  if (!blog) return { title: "Blog Not Found" };
+
+  const ogImageUrl = blog.mainImage
+    ? urlFor(blog.mainImage).width(1200).height(630).url()
+    : undefined;
+
+  const canonicalUrl = `${SITE_URL}/blogs/${id}`;
+
+  return {
+    title: blog.title ?? "Blog",
+    description: blog.excerpt ?? `Read this article on the Somoco Ghana blog.`,
+    openGraph: {
+      title: blog.title ?? "Blog | Somoco Ghana Limited",
+      description:
+        blog.excerpt ?? "Read this article on the Somoco Ghana blog.",
+      url: canonicalUrl,
+      type: "article",
+      publishedTime: blog.publishedAt ?? undefined,
+      authors: ["Somoco Ghana Limited"],
+      images: ogImageUrl
+        ? [
+            {
+              url: ogImageUrl,
+              width: 1200,
+              height: 630,
+              alt: blog.title ?? "Blog post",
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title ?? "Blog | Somoco Ghana Limited",
+      description:
+        blog.excerpt ?? "Read this article on the Somoco Ghana blog.",
+      images: ogImageUrl ? [ogImageUrl] : [],
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
+  };
+}
 
 export default async function BlogByIdPage({ params }: Props) {
   // defensively await params like other pages
-  const { id } = (await params) as { id?: string };
+  const { id } = await params;
 
   if (!id || typeof id !== "string") {
     return <div className="py-24 text-center">Blog not found</div>;
   }
 
-  const query = `*[_type == "blog" && _id == $id][0]{_id, title, excerpt, body, mainImage, publishedAt}`;
-  const blog = await client.fetch<Blog | null>(query, { id });
+  const blog = await client.fetch<Blog | null>(blogQuery, { id });
 
   if (!blog) {
     return <div className="py-24 text-center">Blog not found</div>;

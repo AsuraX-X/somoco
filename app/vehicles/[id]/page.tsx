@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
@@ -22,6 +23,58 @@ import QuoteRequestButton from "@/components/General/QuoteRequestButton";
 type Props = {
   params: { id: string };
 };
+
+const VEHICLE_META_QUERY = `*[_type == "vehicle" && _id == $id && disabled != true][0]{
+  _id, name, description, "headerImage": headerImage1
+}`;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = (await params) as { id?: string };
+  if (!id) return {};
+
+  const vehicle = await client
+    .fetch<{
+      name?: string;
+      description?: { children?: { text?: string }[] }[];
+      headerImage?: unknown;
+    } | null>(VEHICLE_META_QUERY, { id })
+    .catch(() => null);
+
+  if (!vehicle) return { title: "Vehicle Not Found" };
+
+  const name = vehicle.name ?? "Vehicle";
+  const excerpt = vehicle.description
+    ?.flatMap((b) => b?.children ?? [])
+    .map((c) => c?.text ?? "")
+    .join(" ")
+    .slice(0, 155);
+
+  const ogImage = vehicle.headerImage
+    ? urlFor(vehicle.headerImage).width(1200).height(630).auto("format").url()
+    : "/banners/products-banner.jpg";
+
+  return {
+    title: name,
+    description:
+      excerpt ||
+      `Explore the ${name} – available at Somoco Ghana Limited, authorized Bajaj distributor in Ghana.`,
+    openGraph: {
+      title: `${name} | Somoco Ghana Limited`,
+      description: excerpt || `Explore the ${name} at Somoco Ghana.`,
+      url: `https://www.somocoghana.com/vehicles/${id}`,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name} | Somoco Ghana Limited`,
+      description: excerpt || `Explore the ${name} at Somoco Ghana.`,
+      images: [ogImage],
+    },
+    alternates: {
+      canonical: `https://www.somocoghana.com/vehicles/${id}`,
+    },
+  };
+}
 
 function plainTextFromBlocks(blocks?: Vehicle["description"]) {
   if (!blocks) return null;
